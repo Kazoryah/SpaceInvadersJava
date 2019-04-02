@@ -33,8 +33,8 @@
     - alien head: double player's speed
 
 ## CODE
-#The game is composed of multiple classes: AlienBullet, Alien, BonusFireRate,
-#BonusLife, Bullet, Game, Player, SpaceInvaders.
+# The game is composed of multiple classes: AlienBullet, Alien, BonusFireRate,
+# BonusLife, Bullet, Game, Player, SpaceInvaders.
     - Player:
         x, y -> position
         rotation -> degree of rotation of the spaceship (left/right)
