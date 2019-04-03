@@ -18,6 +18,8 @@ public class Wrapper
     public static BonusSpeed bonus_speed = null;
     public static BonusShield bonus_shield = null;
 
+    public static Object lock = new Object();
+
     public static int extraLife()
     {
         int res = extra_life;

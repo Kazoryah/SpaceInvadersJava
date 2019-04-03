@@ -161,7 +161,7 @@ public class SpaceInvaders
                 if (player.isAlive() == 1)
                     aliens[row][j].shoot(difficulty, player, alien_bullets);
                 if (level == 3 && player2.isAlive() == 1)
-                    aliens[row][j].shoot(difficulty, player, alien_bullets);
+                    aliens[row][j].shoot(difficulty, player2, alien_bullets);
 
                 if (aliens[row][j].isTooLow() == 1)
                     aliens_won = 1;
@@ -232,7 +232,7 @@ public class SpaceInvaders
                 {
                     double random = Math.random();
                     //chose which bonus to drop
-                    if (random < 1)//increase fire rate
+                    if (random < 0.25)//increase fire rate
                         Bonus.createBonusFireRate(player);
                     else if (random < 0.5) //extra life
                         Bonus.createBonusLife(player);

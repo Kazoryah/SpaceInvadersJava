@@ -21,7 +21,7 @@ public final class DrawAll
     static String game_over = "png/finalLost.jpg";
     static String won_player1 = "png/wonPlayer1.png";
     static String won_player2 = "png/wonPlayer2.png";
-    static String equality = "png/equality";
+    static String equality = "png/equality.png";
 
     public static void drawStart()
     {

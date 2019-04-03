@@ -7,6 +7,7 @@ BonusShield.java
 BonusSpeed.java
 Bullet.java
 DrawAll.java
+EndTimer.java
 Game.java
 IngameTimer.java
 Player.java
@@ -15,3 +16,4 @@ StdAudio.java
 StdDraw.java
 StdIn.java
 StdOut.java
+Wrapper.java

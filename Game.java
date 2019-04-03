@@ -1,6 +1,6 @@
 public class Game
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
         //size of standard screen
         StdDraw.setCanvasSize(1920, 1080);
@@ -143,8 +143,8 @@ public class Game
                 DrawAll.drawDeadPlayer2();
             StdDraw.show();
 
-            IngameTimer timer = new IngameTimer(2000);
-            while (timer.getTime() != 0){}
+            EndTimer timer = new EndTimer();
+            synchronized (Wrapper.lock){Wrapper.lock.wait();}
 
             if (SI.aliensWon() == 1)
                 break;
