@@ -2,6 +2,8 @@
     - the command is "java Game", the Game class manage everything
     - if you want to compile it "javac @make.txt", it's a command to compile
         everything mentioned in make.txt
+    - momemtum !!
+    - privatize variables and have getters/setters
 
 ## IDEAS/TO MODIFY
     - Protections

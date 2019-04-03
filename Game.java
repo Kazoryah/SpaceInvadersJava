@@ -46,13 +46,17 @@ public class Game
                 StdDraw.show(10);
             }
 
-            //create a new SpaceInvaders object
+            //create a new SpaceInvaders object and initliaze Wrapper variables
+            Wrapper.initializeVariables();
             SpaceInvaders SI = new SpaceInvaders(level);
         //THE GAME
             while (SI.aliensWon() == 0)
             {
                 if (SI.aliensLeft() == 0)
+                {
                     SI = new SpaceInvaders(level);
+                    Wrapper.initializeVariables();
+                }
 
             //pause
                 if (StdDraw.isKeyPressed(80))
