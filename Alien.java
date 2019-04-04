@@ -12,8 +12,8 @@ public class Alien
 
     public Alien(int i, int j)
     {
-        x = 480 + 130 * j;
-        y = 700 + 100 * i;
+        x = 600 + 100 * j;
+        y = 800 + 80 * i;
         start_x = x;
         start_y = y;
         shooter = 0;
@@ -22,9 +22,9 @@ public class Alien
     public void draw()
     {
         if (this.shooter == 0)
-            StdDraw.picture(x, y, pngShield);
+            StdDraw.picture(x, y, pngShield, 300, 300);
         else
-            StdDraw.picture(x, y, png);
+            StdDraw.picture(x, y, png, 300, 300);
     }
 
     public void shooter()
@@ -38,6 +38,11 @@ public class Alien
             x += alien_speed;
         else
             x -= alien_speed;
+    }
+
+    public void moveDown()
+    {
+        y -= 25;
     }
 
     public void checkBorder()

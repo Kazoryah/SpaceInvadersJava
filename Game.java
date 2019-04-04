@@ -109,6 +109,7 @@ public class Game
                             SI.restart();
                         else
                             SI.player.restart();
+                        Wrapper.repositioning();
                     }
                     if (level != 3)
                         DrawAll.drawDeadScreen();
@@ -128,6 +129,7 @@ public class Game
                     {
                         timer2 = null;
                         SI.player2.restart();
+                        Wrapper.repositioning();
                     }
                 }
 

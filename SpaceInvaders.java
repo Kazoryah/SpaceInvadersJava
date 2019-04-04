@@ -30,10 +30,10 @@ public class SpaceInvaders
     {
         level = lvl;
         if (level != 3)
-            player = new Player(960, 150, 1); //coordinates chosen
+            player = new Player(960, 130, 1); //coordinates chosen
         else
-            player = new Player(640, 150, 1); //coordinates chosen
-        player2 = new Player(1280, 150, 2);
+            player = new Player(640, 130, 1); //coordinates chosen
+        player2 = new Player(1280, 130, 2);
         bullets = new Bullet[50]; //50 bullets max on the screen, that's enough
         alien_bullets = new AlienBullet[50];
         initializeBullets(); //call to clear the lists above
@@ -174,7 +174,7 @@ public class SpaceInvaders
                     aliens[i][j].move(aliens_speed);
                     if (Wrapper.moving_down == 1)
                     {
-                        aliens[i][j].y -= 25; //chosen distance
+                        aliens[i][j].moveDown();
                         aliens_steps++;
                     }
                 }

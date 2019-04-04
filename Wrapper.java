@@ -39,4 +39,9 @@ public class Wrapper
         bonus_speed = null;
         bonus_shield = null;
     }
+
+    public static void repositioning()
+    {
+        moving_right = 1;
+    }
 }

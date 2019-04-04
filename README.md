@@ -2,14 +2,21 @@
     - the command is "java Game", the Game class manage everything
     - if you want to compile it "javac @make.txt", it's a command to compile
         everything mentioned in make.txt
-    - momemtum !!
-    - privatize variables and have getters/setters
 
 ## IDEAS/TO MODIFY
-    - Protections
-    - increase difficulty after restart
+    - Protections #####I DON'T THINK WE'LL GET ANY, UNLESS RESCALING THE GAME
+    - increase difficulty after restart/ whole balance
     - page of options
     - audio
+    - privatize variables and have getters/setters
+    - "Aliens Won." image
+    - scaling screen size
+    - Aliens pause after going down
+    - pause screen
+    - convert the images that need rescaling
+    - scoreboard
+    - find a way to shut down the game by code
+    - timer alien bullets
 
 ## GAME CONTROLS
     - start menu: '1' to start with bonuses
