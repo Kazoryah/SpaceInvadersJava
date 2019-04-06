@@ -4,18 +4,25 @@
         everything mentioned in make.txt
 
 ## IDEAS/TO MODIFY
-    - Protections
+    - Protections with lifes
     - increase difficulty after restart/ whole balance
     - audio
+        - noise when player moves/die
+        - noise when aliens move/go down
+        - noise when players fire (adjust where the sound comes from)
+        - noise for lose/win
+        - make music less high when playing
+        - noise when starting
     - privatize variables and have getters/setters
     - scaling screen size
-    - Aliens pause after going down
-    - pause screen to photoshop
     - convert the images that need rescaling
-    - manage scoreboard
-    - find a way to shut down the game by code
-    - timer alien bullets
     - bar indicating bonus state
+    - bonus vessel
+    - distance from the bottom from which the game is over
+    - lifes to aliens (shield color)
+    - bigger bullet when player waited enough
+    - special aliens
+    - update README (and add a part to explain the choices for the game structure)
 
 ## GAME CONTROLS
     - start menu: '1' to start with bonuses

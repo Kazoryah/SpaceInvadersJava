@@ -3,7 +3,7 @@ import java.util.Timer;
 
 public class EndTimer
 {
-    public EndTimer() throws Exception
+    public EndTimer(long how_long) throws Exception
     {
         Timer timer = new Timer();
         TimerTask task = new TimerTask()
@@ -15,6 +15,6 @@ public class EndTimer
                 timer.cancel();
             }
         };
-        timer.schedule(task, 2000, 2000);
+        timer.schedule(task, how_long, how_long);
     }
 }

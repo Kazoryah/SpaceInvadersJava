@@ -9,6 +9,8 @@ public class Alien
     int shooter;
     String pngShield = "png/alien_shield_300.png";
     String png = "png/alien_300.png";
+    AlienBullet last_bullet;
+    IngameTimer timer;
 
     public Alien(int i, int j)
     {
@@ -17,6 +19,8 @@ public class Alien
         start_x = x;
         start_y = y;
         shooter = 0;
+        last_bullet = new AlienBullet(0, 0);
+        timer = new IngameTimer(1);
     }
 
     public void draw()
@@ -34,15 +38,19 @@ public class Alien
 
     public void move(int alien_speed)
     {
-        if (Wrapper.moving_right == 1)
-            x += alien_speed;
-        else
-            x -= alien_speed;
+        if (timer.time == 0)
+        {
+            if (Wrapper.moving_right == 1)
+                x += alien_speed;
+            else
+                x -= alien_speed;
+        }
     }
 
     public void moveDown()
     {
         y -= 25;
+        timer = new IngameTimer(400);
     }
 
     public void checkBorder()
@@ -71,14 +79,20 @@ public class Alien
     public void shoot(double difficulty, Player player, AlienBullet[]
                       alien_bullets)
     {
-        if (Math.random() < difficulty && x > player.getX() - 300
-            && x < player.getX() + 300)
+        if (last_bullet.timer.time == 0)
         {
-            int i = 0;
-            while (i < 50 && alien_bullets[i] != null)
-                i++;
-            if (i < 50)
-                alien_bullets[i] = new AlienBullet(x, y);
+            if (Math.random() < difficulty && x > player.getX() - 300
+                && x < player.getX() + 300)
+            {
+                int i = 0;
+                while (i < 50 && alien_bullets[i] != null)
+                    i++;
+                if (i < 50)
+                {
+                    alien_bullets[i] = new AlienBullet(x, y);
+                    last_bullet = alien_bullets[i];
+                }
+            }
         }
     }
 

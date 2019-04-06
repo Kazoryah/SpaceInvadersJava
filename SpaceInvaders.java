@@ -42,7 +42,7 @@ public class SpaceInvaders
         left_border = 0;
         right_border = 8;
         shooter_row = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
-        aliens_speed = 5; //chosen speed
+        aliens_speed = 2; //chosen speed
         aliens_killed = 0;
         aliens_left = 36;
         aliens_won = 0;
@@ -223,94 +223,101 @@ public class SpaceInvaders
     //if no bonus, see if it creates one
     //otherwise check the state of the current bonus, if it needs to be
     //delete or if the player caught it
-        public void updateBonus()
+    public void updateBonus()
+    {
+        //creates bonus if no bonus
+        if (Wrapper.is_bonus == 0)
         {
-            //creates bonus if no bonus
-            if (Wrapper.is_bonus == 0)
+            if (Math.random() < 0.01) //0.01 is a chosen rate of bonus drop
             {
-                if (Math.random() < 0.01) //0.01 is a chosen rate of bonus drop
-                {
-                    double random = Math.random();
-                    //chose which bonus to drop
-                    if (random < 0.25)//increase fire rate
-                        Bonus.createBonusFireRate(player);
-                    else if (random < 0.5) //extra life
-                        Bonus.createBonusLife(player);
-                    else if (random < 0.75)
-                        Bonus.createBonusSpeed(player);
-                    else
-                        Bonus.createBonusShield(player);
-                }
-            }
-            else
-            {
-                //manage existing bonus
-                if (Wrapper.is_bonus == 1)
-                    Bonus.checkBonusFireRate(player);
-                else if (Wrapper.is_bonus == 2)
-                    Bonus.checkBonusLife(player);
-                else if (Wrapper.is_bonus == 3)
-                    Bonus.checkBonusSpeed(player);
+                double random = Math.random();
+                //chose which bonus to drop
+                if (random < 0.25)//increase fire rate
+                    Bonus.createBonusFireRate(player);
+                else if (random < 0.5) //extra life
+                    Bonus.createBonusLife(player);
+                else if (random < 0.75)
+                    Bonus.createBonusSpeed(player);
                 else
-                    Bonus.checkBonusShield(player);
+                    Bonus.createBonusShield(player);
             }
         }
-
-        //function to move all the bullets
-        //check if the bullets need to be destroyed or touched an alien
-        //check if the player has been touched
-        //check bullets that are off screen
-        public void updateBullets()
+        else
         {
-            //check if any bullet touched an alien or is off screen
-            //it simulates a circle with 50 of radius and see if the bullet is
-            //in this circle (see circle equation)
-            for (int i = 0; i < 50; i++)
+            //manage existing bonus
+            if (Wrapper.is_bonus == 1)
+                Bonus.checkBonusFireRate(player);
+            else if (Wrapper.is_bonus == 2)
+                Bonus.checkBonusLife(player);
+            else if (Wrapper.is_bonus == 3)
+                Bonus.checkBonusSpeed(player);
+            else
+                Bonus.checkBonusShield(player);
+        }
+    }
+
+    //function to move all the bullets
+    //check if the bullets need to be destroyed or touched an alien
+    //check if the player has been touched
+    //check bullets that are off screen
+    public void updateBullets()
+    {
+        //check if any bullet touched an alien or is off screen
+        //it simulates a circle with 50 of radius and see if the bullet is
+        //in this circle (see circle equation)
+        for (int i = 0; i < 50; i++)
+        {
+            if (bullets[i] != null)
             {
-                if (bullets[i] != null)
+                bullets[i].move();
+                if (bullets[i].isOutOfScreen() == 1)
+                    bullets[i] = null;
+                else
                 {
-                    bullets[i].move();
-                    if (bullets[i].isOutOfScreen() == 1)
-                        bullets[i] = null;
-                    else
+                    int j = 0;
+                    int row;
+                    while (j < 9 && bullets[i] != null)
                     {
-                        int j = 0;
-                        int row;
-                        while (j < 9 && bullets[i] != null)
+                        row = shooter_row[j];
+                        if (row < 4)
                         {
-                            row = shooter_row[j];
-                            if (row < 4)
+                            if (bullets[i].checkKill(aliens[row][j]) == 1)
                             {
-                                if (bullets[i].checkKill(aliens[row][j]) == 1)
-                                {
-                                    aliens[row][j] = null;
-                                    aliens_killed++;
-                                    aliens_left--;
-                                    shooter_row[j]++;
-                                    bullets[i].increasePoints(row + 1);
-                                    if (row + 1 < 4)
-                                        aliens[row + 1][j].shooter();
-                                    bullets[i] = null;
-                                }
+                                StdAudio.play("audio/alien_die.wav");
+                                aliens[row][j] = null;
+                                aliens_killed++;
+                                aliens_left--;
+                                shooter_row[j]++;
+                                bullets[i].increasePoints(row + 1);
+                                if (row + 1 < 4)
+                                    aliens[row + 1][j].shooter();
+                                bullets[i] = null;
                             }
-                            j++;
                         }
+                        j++;
                     }
                 }
+            }
 
-                //check if an anlien bullet touched the player
-                //also check if the bullet is off screen
+            //check if an anlien bullet touched the player
+            //also check if the bullet is off screen
             if (alien_bullets[i] != null)
             {
                 alien_bullets[i].move();
                 if (Wrapper.is_bonus != 4
                     || Wrapper.bonus_shield.stillActive() != 1)
                 {
-                    alien_bullets[i].checkKill(player);
-                    if (level == 3)
-                        alien_bullets[i].checkKill(player2);
+                    int d = alien_bullets[i].checkKill(player);
+                    if (d == 1)
+                        alien_bullets[i] = null; //destroy bullet if it killed
+                    else if (level == 3) //the player
+                    {
+                        d = alien_bullets[i].checkKill(player2);
+                        if (d == 1)
+                            alien_bullets[i] = null;
+                    }
 
-                    if (alien_bullets[i].isOutOfScreen() == 1)
+                    if (d == 0 && alien_bullets[i].isOutOfScreen() == 1)
                         alien_bullets[i] = null;
                 }
             }

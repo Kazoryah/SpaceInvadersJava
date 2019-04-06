@@ -24,17 +24,17 @@ public class Bullet
         {
             side = 0;
             rotation_rad = Math.toRadians(degree);
-            //100 is the length of the spaceship
+            //60 is the length from the spaceship to the where the bullet pops
             //those are juste math to know from where to launch the bullet
-            x = X - Math.sin(rotation_rad) * 100.00;
-            y = Y + Math.cos(rotation_rad) * 100.00;
+            x = X - Math.sin(rotation_rad) * 50.00;
+            y = Y + Math.cos(rotation_rad) * 50.00;
         }
         else
         {
             side = 1;
             rotation_rad = Math.toRadians(360 - degree);
-            x = X + Math.sin(rotation_rad) * 100.00;
-            y = Y + Math.cos(rotation_rad) * 100.00;
+            x = X + Math.sin(rotation_rad) * 50.00;
+            y = Y + Math.cos(rotation_rad) * 50.00;
         }
         rotation_deg = degree;
         launched_by_player = by_player;
@@ -68,9 +68,9 @@ public class Bullet
         double aX = alien.getX();
         double aY = alien.getY();
 
-        if ((x - aX) * (x - aX) + (y - aY) * (y - aY) <= 2500)
-            return 1;
-        return 0;
+        if ((x - aX) * (x - aX) + (y - aY) * (y - aY) <= 1849) //43x43
+            return 1;                           //I chose 43 because it is the
+        return 0;                               //alien size on the screen
     }
 
     public int isOutOfScreen()

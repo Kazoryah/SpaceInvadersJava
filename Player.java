@@ -34,8 +34,6 @@ public class Player
     public void draw()
     {
         StdDraw.picture(x, y, png, rotation);
-//        StdDraw.setPenColor(StdDraw.RED);
-//        StdDraw.circle(x, y, 100);
     }
 
     //used to draw shield
@@ -122,7 +120,7 @@ public class Player
 
     public void checkBoundaries()
     {
-        if (x < 120)
+        if (x < 1ecreasing0)
             blocked = -1;
         if (x > 1800)
             blocked = 1;
@@ -134,7 +132,7 @@ public class Player
         {
             if (speed > 0)
                 speed = -speed;
-            speed -= dx;
+            speed += decreasing;
             x += speed;
             if (x <= 1780)
                 blocked = 0;
@@ -143,7 +141,7 @@ public class Player
         {
             if (speed < 0)
                 speed = -speed;
-            speed += dx;
+            speed -= decreasing;
             x += speed;
             if (x >= 140)
                 blocked = 0;
@@ -229,6 +227,7 @@ public class Player
             if  (i < 50)
             {
                 bullets[i] = new Bullet(x, y, rotation, player);
+                StdAudio.play("audio/fire.wav");
             }
             else
                 return -1;
@@ -248,6 +247,7 @@ public class Player
             if  (i < 50)
             {
                 bullets[i] = new Bullet(x, y, rotation, player);
+                StdAudio.play("audio/fire.wav");
             }
             else
                 return -1;

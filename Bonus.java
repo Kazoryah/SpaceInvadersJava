@@ -5,7 +5,7 @@ public final class Bonus
         Wrapper.bonus_fire_rate = new BonusFireRate();
         //check if the bonus is not to close from the player
         if (Wrapper.bonus_fire_rate.stayCreated(player) == 1)
-            Wrapper.is_bonus = 1;
+           Wrapper.is_bonus = 1;
         else//if to close, bonus canceled
             Wrapper.bonus_fire_rate = null;
     }
@@ -65,7 +65,10 @@ public final class Bonus
             Wrapper.extra_speed = 0;
         }
         else if (state == 1)
+        {
             Wrapper.extra_speed = 15;
+            StdAudio.play("audio/bonus_speed.wav");
+        }
     }
 
     public static void createBonusShield(Player player)
@@ -87,6 +90,9 @@ public final class Bonus
             Wrapper.bonus_shield = null;
         }
         else if (state == 1)
+        {
             Wrapper.bonus_shield.startBonus();
+            StdAudio.play("audio/bonus_shield.wav");
+        }
     }
 }
