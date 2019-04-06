@@ -9,7 +9,7 @@ public class BonusSpeed
     IngameTimer still_active;
     IngameTimer still_drawn;
     int draw;
-    String png = "png/bonusSpeed.png";
+    String png = "png/bonus_speed.png";
 
     public BonusSpeed()
     {

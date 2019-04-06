@@ -9,7 +9,7 @@ public class BonusFireRate
     IngameTimer still_active;
     IngameTimer still_drawn;
     int draw;
-    String png = "png/bonusFireRate.gif";
+    String png = "png/bonus_fire_rate.gif";
 
     public BonusFireRate()
     {

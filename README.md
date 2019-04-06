@@ -4,19 +4,18 @@
         everything mentioned in make.txt
 
 ## IDEAS/TO MODIFY
-    - Protections #####I DON'T THINK WE'LL GET ANY, UNLESS RESCALING THE GAME
+    - Protections
     - increase difficulty after restart/ whole balance
-    - page of options
     - audio
     - privatize variables and have getters/setters
-    - "Aliens Won." image
     - scaling screen size
     - Aliens pause after going down
-    - pause screen
+    - pause screen to photoshop
     - convert the images that need rescaling
-    - scoreboard
+    - manage scoreboard
     - find a way to shut down the game by code
     - timer alien bullets
+    - bar indicating bonus state
 
 ## GAME CONTROLS
     - start menu: '1' to start with bonuses

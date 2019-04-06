@@ -10,18 +10,21 @@ public final class DrawAll
     static Font died_multi_font = new Font("Arial", Font.BOLD, 120);
     static Color died_color = new Color(216, 4, 4);
 
-    static String background = "png/ingame.jpg";
-    static String spaceship_first = "png/finalSpaceship.gif";
-    static String spaceship_second = "png/finalSecondSpaceship.gif";
-    static String start = "png/startFinal.jpg";
-    static String dead = "png/smoke-cloud-03.png";
-    static String dead_screen = "png/downOnePlayer.png";
-    static String dead_player1 = "png/downPlayer1.png";
-    static String dead_player2 = "png/downPlayer2.png";
-    static String game_over = "png/finalLost.jpg";
-    static String won_player1 = "png/wonPlayer1.png";
-    static String won_player2 = "png/wonPlayer2.png";
-    static String equality = "png/equality.png";
+    static String background = "png/screen_background_ingame.jpg";
+    static String life_first = "png/life_spaceship_first.png";
+    static String life_second = "png/life_spaceship_second.png";
+    static String start = "png/screen_start_v4.png";
+    static String dead = "png/smoke_cloud_1.png";
+    static String dead_screen = "png/screen_down_solo.png";
+    static String dead_player1 = "png/screen_down_multi_1.png";
+    static String dead_player2 = "png/screen_down_multi_2.png";
+    static String game_over = "png/screen_game_over_5.png";
+    static String won_player1 = "png/screen_won_player_1.png";
+    static String won_player2 = "png/screen_won_player_2.png";
+    static String won_aliens = "png/screen_aliens_won.png";
+    static String equality = "png/screen_equality.png";
+    static String pause = "png/screen_pause.png";
+    static String more = "png/screen_more.png";
 
     public static void drawStart()
     {
@@ -36,14 +39,14 @@ public final class DrawAll
     public static void drawLivesFirst(int lives)
     {
         for (int i = 0; i < lives; i++)
-            StdDraw.picture(50 + 45 * i, 60, spaceship_first, 100, 100);
+            StdDraw.picture(50 + 45 * i, 60, life_first);
     }
 
     public static void drawLivesSecond(int lives)
     {
         for (int i = 0; i < lives; i++)
         {
-            StdDraw.picture(1870 - 45 * i, 60, spaceship_second, 100, 100);
+            StdDraw.picture(1870 - 45 * i, 60, life_second);
         }
     }
 
@@ -65,7 +68,7 @@ public final class DrawAll
 
     public static void drawDead(Player player)
     {
-        StdDraw.picture(player.getX(), 145, dead);
+        StdDraw.picture(player.getX(), 130, dead);
     }
 
     public static void drawDeadScreen()
@@ -75,9 +78,7 @@ public final class DrawAll
 
     public static void drawAliensWon()
     {
-        StdDraw.setPenColor(died_color);
-        StdDraw.setFont(died_font);
-        StdDraw.text(960, 540, "ALIENS WON.");
+        StdDraw.picture(960, 540, won_aliens, 1200, 200);
     }
 
     public static void drawDeadPlayer1()
@@ -120,5 +121,15 @@ public final class DrawAll
             StdDraw.text(1280, 1000,
                     Integer.toString(Wrapper.second_player_points));
         }
+    }
+
+    public static void drawPause()
+    {
+        StdDraw.picture(960, 540, pause);
+    }
+
+    public static void drawMore()
+    {
+        StdDraw.picture(960, 540, more);
     }
 }

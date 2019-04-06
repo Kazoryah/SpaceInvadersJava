@@ -9,7 +9,7 @@ public class BonusLife
     IngameTimer still_drawn;
     IngameTimer still_active;
     int draw;
-    String png = "png/finalSpaceship.gif";
+    String png = "png/spaceship_first.png";
 
     public BonusLife()
     {

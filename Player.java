@@ -7,6 +7,7 @@ public class Player
     int is_alive;
     int player;
     String png;
+    String shield = "png/spaceship_shield_250.png";
     double dx;
     double decreasing;
     double speed;
@@ -21,9 +22,9 @@ public class Player
         rotation = 0;
         is_alive = 1;
         if (player == 1)
-            png = "png/testSpaceFirst.png";
+            png = "png/spaceship_first_250.png";
         else
-            png = "png/testSpaceSecond.png";
+            png = "png/spaceship_second_250.png";
         dx = 2.5;
         decreasing = 1;
         speed = 0;
@@ -32,15 +33,15 @@ public class Player
 
     public void draw()
     {
-        StdDraw.picture(x, y, png, 250, 250, rotation);
+        StdDraw.picture(x, y, png, rotation);
 //        StdDraw.setPenColor(StdDraw.RED);
 //        StdDraw.circle(x, y, 100);
     }
 
     //used to draw shield
-    public void draw(String image)
+    public void drawShield()
     {
-        StdDraw.picture(x, y, image, rotation);
+        StdDraw.picture(x, y, shield, rotation);
     }
 
     //the degree of rotation is into [0;360[

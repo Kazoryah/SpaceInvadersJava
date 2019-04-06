@@ -25,25 +25,33 @@ public class Game
             //draw the menu screen, waiting for a key pressed
             while(true)
             {
-                if (StdDraw.isKeyPressed(49)) //1 key
+                if (StdDraw.isKeyPressed(77)) //M key
                 {
-                    level = 1;
-                    break;
+                    DrawAll.drawMore();
+                    StdDraw.show();
+                    while (!StdDraw.isKeyPressed(82)){} //R key
                 }
+                else
+                {
+                    DrawAll.drawStart();
+                    StdDraw.show();
+                    if (StdDraw.isKeyPressed(49)) //1 key
+                    {
+                        level = 1;
+                        break;
+                    }
 
-                if (StdDraw.isKeyPressed(50)) //2 key
-                {
-                    level = 2;
-                    break;
+                    if (StdDraw.isKeyPressed(50)) //2 key
+                    {
+                        level = 2;
+                        break;
+                    }
+                    if (StdDraw.isKeyPressed(51)) //3 key
+                    {
+                        level = 3;
+                        break;
+                    }
                 }
-                if (StdDraw.isKeyPressed(51)) //3 key
-                {
-                    level = 3;
-                    break;
-                }
-
-                DrawAll.drawStart();
-                StdDraw.show(10);
             }
 
             //create a new SpaceInvaders object and initliaze Wrapper variables
@@ -60,7 +68,13 @@ public class Game
 
             //pause
                 if (StdDraw.isKeyPressed(80))
-                    while(!StdDraw.isKeyPressed(82)){}
+                {
+                    while(!StdDraw.isKeyPressed(82))
+                    {
+                        DrawAll.drawPause();
+                        StdDraw.show();
+                    }
+                }
             //calcul part
                 SI.movePlayer();
                 SI.updateBullets();

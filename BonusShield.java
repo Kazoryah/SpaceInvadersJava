@@ -9,7 +9,7 @@ public class BonusShield
     IngameTimer still_active;
     IngameTimer still_drawn;
     int draw;
-    String png = "png/bonusShield.png";
+    String png = "png/bonus_shield.png";
 
     public BonusShield()
     {

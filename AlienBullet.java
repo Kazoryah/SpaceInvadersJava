@@ -2,7 +2,7 @@ public class AlienBullet
 {
     double x;
     double y;
-    String png = "png/laserAlien.png";
+    String png = "png/laser_alien.png";
 
     public AlienBullet(double X, double Y)
     {

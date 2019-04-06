@@ -30,10 +30,10 @@ public class SpaceInvaders
     {
         level = lvl;
         if (level != 3)
-            player = new Player(960, 130, 1); //coordinates chosen
+            player = new Player(960, 140, 1); //coordinates chosen
         else
-            player = new Player(640, 130, 1); //coordinates chosen
-        player2 = new Player(1280, 130, 2);
+            player = new Player(640, 140, 1); //coordinates chosen
+        player2 = new Player(1280, 140, 2);
         bullets = new Bullet[50]; //50 bullets max on the screen, that's enough
         alien_bullets = new AlienBullet[50];
         initializeBullets(); //call to clear the lists above
@@ -94,7 +94,7 @@ public class SpaceInvaders
             player2.draw();                     //pass on player1 position
         //draw player
         if (Wrapper.is_bonus == 4 && Wrapper.bonus_shield.stillActive() == 1)
-            player.draw("png/testShield.png");
+            player.drawShield();
         else
             player.draw();
 

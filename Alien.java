@@ -7,8 +7,8 @@ public class Alien
     double start_x;
     double start_y;
     int shooter;
-    String pngShield = "png/alienShield.png";
-    String png = "png/alien.png";
+    String pngShield = "png/alien_shield_300.png";
+    String png = "png/alien_300.png";
 
     public Alien(int i, int j)
     {
@@ -22,9 +22,9 @@ public class Alien
     public void draw()
     {
         if (this.shooter == 0)
-            StdDraw.picture(x, y, pngShield, 300, 300);
+            StdDraw.picture(x, y, pngShield);
         else
-            StdDraw.picture(x, y, png, 300, 300);
+            StdDraw.picture(x, y, png);
     }
 
     public void shooter()

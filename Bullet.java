@@ -14,9 +14,9 @@ public class Bullet
     public Bullet(double X, double Y, int degree, int by_player)
     {
         if (by_player == 1)
-            png = "png/laserFirst.png";
+            png = "png/laser_first_player.png";
         else
-            png = "png/laserSecond.png";
+            png = "png/laser_second_player.png";
 
         //separate case if the vessel is rotated left or right
         //because it is not the same calcul
