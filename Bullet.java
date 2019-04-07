@@ -87,4 +87,14 @@ public class Bullet
         else
             Wrapper.second_player_points += 10 * row;
     }
+
+    public double getX()
+    {
+        return x;
+    }
+
+    public double getY()
+    {
+        return y;
+    }
 }

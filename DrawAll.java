@@ -80,22 +80,22 @@ public final class DrawAll
 
     public static void drawDeadScreen()
     {
-        StdDraw.picture(960, 540, dead_screen, 1200, 200);
+        StdDraw.picture(960, 540, dead_screen);
     }
 
     public static void drawAliensWon()
     {
-        StdDraw.picture(960, 540, won_aliens, 1200, 200);
+        StdDraw.picture(960, 540, won_aliens);
     }
 
     public static void drawDeadPlayer1()
     {
-        StdDraw.picture(960,540, dead_player1, 1200, 200);
+        StdDraw.picture(960,540, dead_player1);
     }
 
     public static void drawDeadPlayer2()
     {
-        StdDraw.picture(960, 540, dead_player2, 1200, 200);
+        StdDraw.picture(960, 540, dead_player2);
     }
 
     public static void drawGameOver(int level, int aliens_won, int lives,

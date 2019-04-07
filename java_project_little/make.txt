@@ -14,6 +14,4 @@ Player.java
 SpaceInvaders.java
 StdAudio.java
 StdDraw.java
-StdIn.java
-StdOut.java
 Wrapper.java

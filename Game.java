@@ -9,10 +9,8 @@ public class Game
         //enable the calcul off the next screen before displaying
         //increase fluidity
         StdDraw.enableDoubleBuffering();
-        StdAudio.loop("audio/back_music.wav");
-
+        StdAudio.loop("audio/background_low.wav");
         int level;
-
         while (true)
         {
             IngameTimer timer1 = null;
@@ -51,9 +49,12 @@ public class Game
                         level = 3;
                         break;
                     }
+                    if (StdDraw.isKeyPressed(27)) //escape key
+                        System.exit(0);
                 }
             }
-
+            StdAudio.close();
+            StdAudio.play("audio/start_click_v2.wav");
             //create a new SpaceInvaders object and initliaze Wrapper variables
             Wrapper.initializeVariables();
             SpaceInvaders SI = new SpaceInvaders(level);
@@ -64,6 +65,7 @@ public class Game
                 {
                     DrawAll.drawWon();
                     StdDraw.show();
+                    StdAudio.play("audio/win.wav");
                     EndTimer timer = new EndTimer(3000);
                     synchronized (Wrapper.lock){Wrapper.lock.wait();}
                     SI = new SpaceInvaders(level);
@@ -88,6 +90,9 @@ public class Game
                 SI.movePlayer();
                 SI.updateBullets();
                 SI.updateAliens();
+
+                if (level != 2)
+                    SI.updateProtections();
 
                 if (level == 1)
                 {
@@ -159,7 +164,7 @@ public class Game
                 //we literally see nothing
                 StdDraw.show(10);
             }
-
+            StdAudio.play("audio/game_over_v3.wav");
             if (SI.aliensWon() == 1)
                 DrawAll.drawAliensWon();
 

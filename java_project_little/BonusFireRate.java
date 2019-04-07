@@ -9,18 +9,18 @@ public class BonusFireRate
     IngameTimer still_active;
     IngameTimer still_drawn;
     int draw;
-    String png = "png/bonusFireRate.gif";
+    String png = "png/bonus_fire_rate.gif";
 
     public BonusFireRate()
     {
-        x = (double)(int)(Math.random() * 1152);
-        y = 84;
+        x = (double)(int)(Math.random() * 1344);
+        y = 98;
 
         //if it is outside the range of the spaceship, put it back in range
-        if (x > 1080)
-            x = 1080;
-        if (x < 72)
-            x = 72;
+        if (x > 1260)
+            x = 1260;
+        if (x < 84)
+            x = 84;
         //first timer to know when the bonus needs to disappear
         still_drawn = new IngameTimer(2000);
         still_active = null;
@@ -56,7 +56,7 @@ public class BonusFireRate
     {
         double pX = player.getX();
 
-        if (x < pX - 120 || x > pX + 120)
+        if (x < pX - 140 || x > pX + 140)
             return 1;
         return 0;
     }
@@ -70,7 +70,7 @@ public class BonusFireRate
         {
             double pX = player.getX();
 
-            if ((x - pX) * (x - pX) < 3600)
+            if ((x - pX) * (x - pX) < 4900)
             {
                 startBonus();
                 return 1;

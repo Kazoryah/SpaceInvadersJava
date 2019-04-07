@@ -10,6 +10,7 @@ public class SpaceInvaders
     Bullet last_bullet; //last bullet reference, to get its time variable to
                         //know when the player can shoot again
     Bullet last_bullet2;
+    Protections[] protections;
 //====
     Alien[][] aliens; //all the aliens
     AlienBullet[] alien_bullets; //all the aliens' bullets
@@ -50,6 +51,7 @@ public class SpaceInvaders
         last_bullet = new Bullet(0, 0, 0, 1); //initiated to avoid null
         difficulty = 0.03;                    //exception
         aliens_steps = 0;
+        initializeProtections();
      }
 
     //function that catch any key pressed:
@@ -120,6 +122,15 @@ public class SpaceInvaders
             Wrapper.bonus_speed.draw();
         if (Wrapper.is_bonus == 4 && Wrapper.bonus_shield.draw == 1)
             Wrapper.bonus_shield.draw();
+
+        //draw protections
+        if (level != 2)
+        {
+            if (protections[0] != null)
+                protections[0].draw();
+            if (protections[1] != null)
+                protections[1].draw();
+        }
     }
 
     //initialize every spot of the arrays of bullets to null
@@ -146,6 +157,18 @@ public class SpaceInvaders
         //the aliens at the bottom are shooters
         for (int j = 0; j < 9; j++)
             aliens[0][j].shooter();
+    }
+
+    public void initializeProtections()
+    {
+        if (level == 1)
+            protections = new Protections[]{new Protections(1, 1),
+                          new Protections(2, 1)};
+        else if (level == 3)
+            protections = new Protections[]{new Protections(1, 1),
+                          new Protections(2, 2)};
+        else
+            protections = new Protections[]{null, null};
     }
 
     //update which aliems are on the sides
@@ -298,6 +321,13 @@ public class SpaceInvaders
                     }
                 }
             }
+            //check if bullet touch a protection
+            if (bullets[i] != null && protections[0] != null
+                && protections[0].hasTouched(bullets[i]) == 1)
+                bullets[i] = null;
+            if (bullets[i] != null && protections[1] != null
+                && protections[1].hasTouched(bullets[i]) == 1)
+                bullets[i] = null;
 
             //check if an anlien bullet touched the player
             //also check if the bullet is off screen
@@ -320,7 +350,32 @@ public class SpaceInvaders
                     if (d == 0 && alien_bullets[i].isOutOfScreen() == 1)
                         alien_bullets[i] = null;
                 }
+
+                //check if bullet touch a protection
+                if (alien_bullets[i] != null && protections[0] != null
+                    && protections[0].hasTouched(alien_bullets[i]) == 1)
+                    alien_bullets[i] = null;
+                if (alien_bullets[i] != null && protections[1] != null
+                    && protections[1].hasTouched(alien_bullets[i]) == 1)
+                    alien_bullets[i] = null;
             }
+        }
+    }
+
+    public void updateProtections()
+    {
+        if (protections[0] != null)
+        {
+            protections[0].checkColor();
+            if (protections[0].getLives() == 0)
+                protections[0] = null;
+        }
+
+        if (protections[1] != null)
+        {
+            protections[1].checkColor();
+            if (protections[1].getLives() == 0)
+                protections[1] = null;
         }
     }
 

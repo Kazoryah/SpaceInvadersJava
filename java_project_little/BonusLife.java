@@ -9,16 +9,17 @@ public class BonusLife
     IngameTimer still_drawn;
     IngameTimer still_active;
     int draw;
-    String png = "png/testSpaceSecond.png";
+    String png = "png/spaceship_first.png";
 
     public BonusLife()
     {
-        x = (double)(int)(Math.random() * 1152);
-        y = 84;
-        if (x > 1080)
-            x = 1080;
-        if (x < 72)
-            x = 72;
+        x = (double)(int)(Math.random() * 1344);
+        y = 98;
+
+        if (x > 1260)
+            x = 2260;
+        if (x < 84)
+            x = 84;
         still_drawn = new IngameTimer(2000);
         still_active = null;
         draw = 1;
@@ -51,7 +52,7 @@ public class BonusLife
     {
         double pX = player.getX();
 
-        if (x < pX - 120 || x > pX + 120)
+        if (x < pX - 140 || x > pX + 140)
             return 1;
         return 0;
     }
@@ -65,7 +66,7 @@ public class BonusLife
         {
             double pX = player.getX();
 
-            if ((x - pX) * (x - pX) < 3600)
+            if ((x - pX) * (x - pX) < 4900)
             {
                 startBonus();
                 return 1;

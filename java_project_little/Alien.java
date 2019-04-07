@@ -7,16 +7,20 @@ public class Alien
     double start_x;
     double start_y;
     int shooter;
-    String pngShield = "png/alienShield.png";
-    String png = "png/alien.png";
+    String pngShield = "png/alien_shield_300.png";
+    String png = "png/alien_300.png";
+    AlienBullet last_bullet;
+    IngameTimer timer;
 
     public Alien(int i, int j)
     {
-        x = 288 + 78 * j;
-        y = 420 + 60 * i;
+        x = 420 + 70 * j;
+        y = 560 + 56 * i;
         start_x = x;
         start_y = y;
         shooter = 0;
+        last_bullet = new AlienBullet(0, 0);
+        timer = new IngameTimer(1);
     }
 
     public void draw()
@@ -34,20 +38,29 @@ public class Alien
 
     public void move(int alien_speed)
     {
-        if (Wrapper.moving_right == 1)
-            x += alien_speed;
-        else
-            x -= alien_speed;
+        if (timer.time == 0)
+        {
+            if (Wrapper.moving_right == 1)
+                x += alien_speed;
+            else
+                x -= alien_speed;
+        }
+    }
+
+    public void moveDown()
+    {
+        y -= 17;
+        timer = new IngameTimer(400);
     }
 
     public void checkBorder()
     {
-        if (Wrapper.moving_right == 0 && x < 60)
+        if (Wrapper.moving_right == 0 && x < 70)
         {
             Wrapper.moving_right = 1;
             Wrapper.moving_down = 1;
         }
-        else if (Wrapper.moving_right == 1 && x > 1092)
+        else if (Wrapper.moving_right == 1 && x > 1274)
         {
             Wrapper.moving_right = 0;
             Wrapper.moving_down = 1;
@@ -57,7 +70,7 @@ public class Alien
 
     public int isTooLow()
     {
-        if (y <= 144)
+        if (y <= 168)
             return 1;
         else
             return 0;
@@ -66,14 +79,20 @@ public class Alien
     public void shoot(double difficulty, Player player, AlienBullet[]
                       alien_bullets)
     {
-        if (Math.random() < difficulty && x > player.getX() - 180
-            && x < player.getX() + 180)
+        if (last_bullet.timer.time == 0)
         {
-            int i = 0;
-            while (i < 50 && alien_bullets[i] != null)
-                i++;
-            if (i < 50)
-                alien_bullets[i] = new AlienBullet(x, y);
+            if (Math.random() < difficulty && x > player.getX() - 210
+                && x < player.getX() + 210)
+            {
+                int i = 0;
+                while (i < 50 && alien_bullets[i] != null)
+                    i++;
+                if (i < 50)
+                {
+                    alien_bullets[i] = new AlienBullet(x, y);
+                    last_bullet = alien_bullets[i];
+                }
+            }
         }
     }
 

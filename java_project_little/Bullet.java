@@ -14,9 +14,9 @@ public class Bullet
     public Bullet(double X, double Y, int degree, int by_player)
     {
         if (by_player == 1)
-            png = "png/laserFirst.png";
+            png = "png/laser_first_player.png";
         else
-            png = "png/laserSecond.png";
+            png = "png/laser_second_player.png";
 
         //separate case if the vessel is rotated left or right
         //because it is not the same calcul
@@ -24,17 +24,17 @@ public class Bullet
         {
             side = 0;
             rotation_rad = Math.toRadians(degree);
-            //100 is the length of the spaceship
+            //60 is the length from the spaceship to the where the bullet pops
             //those are juste math to know from where to launch the bullet
-            x = X - Math.sin(rotation_rad) * 60.00;
-            y = Y + Math.cos(rotation_rad) * 60.00;
+            x = X - Math.sin(rotation_rad) * 35.00;
+            y = Y + Math.cos(rotation_rad) * 35.00;
         }
         else
         {
             side = 1;
             rotation_rad = Math.toRadians(360 - degree);
-            x = X + Math.sin(rotation_rad) * 60.00;
-            y = Y + Math.cos(rotation_rad) * 60.00;
+            x = X + Math.sin(rotation_rad) * 35.00;
+            y = Y + Math.cos(rotation_rad) * 35.00;
         }
         rotation_deg = degree;
         launched_by_player = by_player;
@@ -51,11 +51,11 @@ public class Bullet
     public void move()
     {
         if (side == 1)
-            x = x + Math.sin(rotation_rad) * 15;
+            x = x + Math.sin(rotation_rad) * 25;
         else
-            x = x - Math.sin(rotation_rad) * 15;
+            x = x - Math.sin(rotation_rad) * 25;
 
-        y = y + Math.cos(rotation_rad) * 15;
+        y = y + Math.cos(rotation_rad) * 25;
     }
 
     public int getTime()
@@ -68,14 +68,14 @@ public class Bullet
         double aX = alien.getX();
         double aY = alien.getY();
 
-        if ((x - aX) * (x - aX) + (y - aY) * (y - aY) <= 1500)
-            return 1;
-        return 0;
+        if ((x - aX) * (x - aX) + (y - aY) * (y - aY) <= 906) //43x43
+            return 1;                           //I chose 43 because it is the
+        return 0;                               //alien size on the screen
     }
 
     public int isOutOfScreen()
     {
-        if (x < 0 || x > 1152 || y > 648)
+        if (x < 0 || x > 1344 || y > 756)
             return 1;
         return 0;
     }
@@ -86,5 +86,15 @@ public class Bullet
             Wrapper.first_player_points += 10 * row;
         else
             Wrapper.second_player_points += 10 * row;
+    }
+
+    public double getX()
+    {
+        return x;
+    }
+
+    public double getY()
+    {
+        return y;
     }
 }

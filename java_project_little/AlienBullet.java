@@ -2,12 +2,14 @@ public class AlienBullet
 {
     double x;
     double y;
-    String png = "png/laserAlien.png";
+    String png = "png/laser_alien.png";
+    IngameTimer timer;
 
-    public AlienBullet(double X, double Y)
+    public AlienBullet(double x, double y)
     {
-        x = X;
-        y = Y;
+        this.x = x;
+        this.y = y - 70;
+        timer = new IngameTimer(1000);
     }
 
     public void draw()
@@ -17,16 +19,22 @@ public class AlienBullet
 
     public void move()
     {
-        y -= 15;
+        y -= 40;
     }
 
-    public void checkKill(Player player)
+    public int checkKill(Player player)
     {
         double pX = player.getX();
-        double pY = player.getY();
+        double pY = player.getY() - 21; //minus the radius of the bullet image
 
-        if ((x - pX) * (x - pX) + (y - pY) * (y - pY) <= 1500)
-            player.die();
+        if ((x - pX) * (x - pX) + (y - pY) * (y - pY) <= 1325) //52x52
+        {                                          //chose 52 because it is
+            player.die();                          //the player size on screen
+            StdAudio.play("audio/died.wav");
+            return 1;
+        }
+
+        return 0;
     }
 
     public int isOutOfScreen()
@@ -34,5 +42,15 @@ public class AlienBullet
         if (y < 0)
             return 1;
         return 0;
+    }
+
+    public double getX()
+    {
+        return x;
+    }
+
+    public double getY()
+    {
+        return y;
     }
 }

@@ -1,0 +1,29 @@
+- background music: DL Sounds
+    https://www.dl-sounds.com/royalty-free/space-pit/
+- background: Photo by NASA on Unsplash
+    https://unsplash.com/photos/vltMzn0jqsA
+- player spaceship: Freepik
+    https://www.freepik.com/free-vector/modern-spaceship-collection-with-flat-design_2797157.htm
+- bonus fire rate: Kenney Vleugels
+    https://www.kenney.nl/assets/crosshair-pack
+- smoke cloud: Carlos Alface
+    https://opengameart.org/content/2d-mega-image-pack-alien-patrol-inspired-on-moon-patrol-not-a-copy
+- ennemies, shields, lasers: Kenney Vleugels
+     https://www.kenney.nl/assets/space-shooter-redux
+- alien dying sound: bubaproducer
+    https://freesound.org/people/bubaproducer/sounds/151013/
+- laser sound, bonus shield sound: Robinhood76
+    https://freesound.org/people/Robinhood76/sounds/221591/
+- bonus speed sound: Glitchedtones
+    https://freesound.org/people/Glitchedtones/sounds/375925/
+- bonus speed image: PNGkey.com
+    https://www.pngkey.com/maxpic/u2q8e6q8t4o0r5u2/
+- bonus shield image: Freepik
+    https://www.flaticon.com/free-icon/lightning_1532286#term=lightning&page=1&position=93
+- barrier: Kenney Vleugels
+    https://www.kenney.nl/assets/particle-pack
+- start click sound: suonho
+    https://freesound.org/people/suonho/sounds/27568/
+- die sound: 232444
+- gameover sound: 382310
+- win sound: 457547

@@ -120,7 +120,7 @@ public class Player
 
     public void checkBoundaries()
     {
-        if (x < 1ecreasing0)
+        if (x < 120)
             blocked = -1;
         if (x > 1800)
             blocked = 1;
@@ -132,7 +132,7 @@ public class Player
         {
             if (speed > 0)
                 speed = -speed;
-            speed += decreasing;
+            speed -= dx;
             x += speed;
             if (x <= 1780)
                 blocked = 0;
@@ -141,7 +141,7 @@ public class Player
         {
             if (speed < 0)
                 speed = -speed;
-            speed -= decreasing;
+            speed += dx;
             x += speed;
             if (x >= 140)
                 blocked = 0;

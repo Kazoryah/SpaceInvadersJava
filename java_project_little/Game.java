@@ -3,17 +3,15 @@ public class Game
     public static void main(String[] args) throws Exception
     {
         //size of standard screen
-        StdDraw.setCanvasSize(1152, 648);
-        StdDraw.setXscale(0, 1152);
-        StdDraw.setYscale(0, 648);
+        StdDraw.setCanvasSize(1344, 756);
+        StdDraw.setXscale(0, 1344);
+        StdDraw.setYscale(0, 750);
         //enable the calcul off the next screen before displaying
         //increase fluidity
         StdDraw.enableDoubleBuffering();
-
-        int playing = 1;
+        StdAudio.loop("audio/background_low.wav");
         int level;
-
-        while (playing == 1)
+        while (true)
         {
             IngameTimer timer1 = null;
             IngameTimer timer2 = null;
@@ -25,42 +23,76 @@ public class Game
             //draw the menu screen, waiting for a key pressed
             while(true)
             {
-                if (StdDraw.isKeyPressed(49)) //1 key
+                if (StdDraw.isKeyPressed(77)) //M key
                 {
-                    level = 1;
-                    break;
+                    DrawAll.drawMore();
+                    StdDraw.show();
+                    while (!StdDraw.isKeyPressed(82)){} //R key
                 }
+                else
+                {
+                    DrawAll.drawStart();
+                    StdDraw.show();
+                    if (StdDraw.isKeyPressed(49)) //1 key
+                    {
+                        level = 1;
+                        break;
+                    }
 
-                if (StdDraw.isKeyPressed(50)) //2 key
-                {
-                    level = 2;
-                    break;
+                    if (StdDraw.isKeyPressed(50)) //2 key
+                    {
+                        level = 2;
+                        break;
+                    }
+                    if (StdDraw.isKeyPressed(51)) //3 key
+                    {
+                        level = 3;
+                        break;
+                    }
+                    if (StdDraw.isKeyPressed(27)) //escape key
+                        System.exit(0);
                 }
-                if (StdDraw.isKeyPressed(51)) //3 key
-                {
-                    level = 3;
-                    break;
-                }
-
-                DrawAll.drawStart();
-                StdDraw.show(10);
             }
-
-            //create a new SpaceInvaders object
+            StdAudio.close();
+            StdAudio.play("audio/start_click_v2.wav");
+            //create a new SpaceInvaders object and initliaze Wrapper variables
+            Wrapper.initializeVariables();
             SpaceInvaders SI = new SpaceInvaders(level);
         //THE GAME
             while (SI.aliensWon() == 0)
             {
                 if (SI.aliensLeft() == 0)
+                {
+                    DrawAll.drawWon();
+                    StdDraw.show();
+                    StdAudio.play("audio/win.wav");
+                    EndTimer timer = new EndTimer(3000);
+                    synchronized (Wrapper.lock){Wrapper.lock.wait();}
                     SI = new SpaceInvaders(level);
+                    Wrapper.initializeVariables();
+                }
 
             //pause
                 if (StdDraw.isKeyPressed(80))
-                    while(!StdDraw.isKeyPressed(82)){}
+                {
+                    DrawAll.drawPause();
+                    StdDraw.show();
+                    while(true)
+                    {
+                        if (StdDraw.isKeyPressed(27)) //escape key
+                            System.exit(0);
+
+                        if (StdDraw.isKeyPressed(82)) //R key
+                            break;
+                    }
+                }
             //calcul part
                 SI.movePlayer();
                 SI.updateBullets();
                 SI.updateAliens();
+
+                if (level != 2)
+                    SI.updateProtections();
 
                 if (level == 1)
                 {
@@ -105,6 +137,7 @@ public class Game
                             SI.restart();
                         else
                             SI.player.restart();
+                        Wrapper.repositioning();
                     }
                     if (level != 3)
                         DrawAll.drawDeadScreen();
@@ -131,7 +164,7 @@ public class Game
                 //we literally see nothing
                 StdDraw.show(10);
             }
-
+            StdAudio.play("audio/game_over_v3.wav");
             if (SI.aliensWon() == 1)
                 DrawAll.drawAliensWon();
 
@@ -143,22 +176,37 @@ public class Game
                 DrawAll.drawDeadPlayer2();
             StdDraw.show();
 
-            EndTimer timer = new EndTimer();
+            EndTimer timer = new EndTimer(1000);
             synchronized (Wrapper.lock){Wrapper.lock.wait();}
 
             if (SI.aliensWon() == 1)
                 break;
 
-            DrawAll.drawGameOver(level, SI.aliensWon(), lives, lives2);
-
-            StdDraw.show(10);
-
+            IngameTimer timer3 = null;
+            int n = 5;
+            int changed;
+            if (level != 3)
+                changed = Scoreboard.checkSolo();
+            else
+                changed = Scoreboard.checkMulti();
             //wait for key pressed
             while(true)
             {
+                if (n == -1)
+                    break;
+                else if (timer3 == null)
+                    timer3 = new IngameTimer(1200);
+                else if (timer3.time == 0)
+                {
+                    DrawAll.drawGameOver(level, SI.aliensWon(),
+                                        lives, lives2, n, changed);
+                    n--;
+                    timer3 = null;
+                    StdDraw.show();
+                }
                 if (StdDraw.isKeyPressed(27)) //escape key
                 {
-                    playing = 0;
+                    System.exit(0);
                     break;
                 }
                 if (StdDraw.isKeyPressed(82)) //r key

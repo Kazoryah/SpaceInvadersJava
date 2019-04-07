@@ -30,6 +30,7 @@ public class AlienBullet
         if ((x - pX) * (x - pX) + (y - pY) * (y - pY) <= 2704) //52x52
         {                                          //chose 52 because it is
             player.die();                          //the player size on screen
+            StdAudio.play("audio/died.wav");
             return 1;
         }
 
@@ -41,5 +42,15 @@ public class AlienBullet
         if (y < 0)
             return 1;
         return 0;
+    }
+
+    public double getX()
+    {
+        return x;
+    }
+
+    public double getY()
+    {
+        return y;
     }
 }

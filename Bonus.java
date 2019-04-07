@@ -58,11 +58,13 @@ public final class Bonus
     public static void checkBonusSpeed(Player player)
     {
         int state = Wrapper.bonus_speed.checkState(player);
-        if (state == 0)
+        if (state == 0 || state == 2)
         {
             Wrapper.is_bonus = 0;
             Wrapper.bonus_speed = null;
             Wrapper.extra_speed = 0;
+            if (state == 2)
+                StdAudio.play("audio/bonus_speed_2_end.wav");
         }
         else if (state == 1)
         {
@@ -84,10 +86,12 @@ public final class Bonus
     public static void checkBonusShield(Player player)
     {
         int state = Wrapper.bonus_shield.checkState(player);
-        if (state == 0)
+        if (state == 0 || state == 2)
         {
             Wrapper.is_bonus = 0;
             Wrapper.bonus_shield = null;
+            if (state == 2)
+                StdAudio.play("audio/bonus_shield_end.wav");
         }
         else if (state == 1)
         {

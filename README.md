@@ -4,15 +4,11 @@
         everything mentioned in make.txt
 
 ## IDEAS/TO MODIFY
-    - Protections with lifes
     - increase difficulty after restart/ whole balance
     - audio
-        - noise when player moves/die
+        - noise when player moves
         - noise when aliens move/go down
         - noise when players fire (adjust where the sound comes from)
-        - noise for lose/win
-        - make music less high when playing
-        - noise when starting
     - privatize variables and have getters/setters
     - scaling screen size
     - convert the images that need rescaling
@@ -22,6 +18,7 @@
     - lifes to aliens (shield color)
     - bigger bullet when player waited enough
     - special aliens
+    - continue updating screen images
     - update README (and add a part to explain the choices for the game structure)
 
 ## GAME CONTROLS

@@ -63,8 +63,9 @@ public class BonusSpeed
 
     public int checkState(Player player)
     {
-        if ((still_active != null && still_active.time == 0 )
-            || (still_drawn.time == 0 && draw == 1))
+        if (still_active != null && still_active.time == 0 )
+            return 2;
+        else if (still_drawn.time == 0 && draw == 1)
             return 0;
         else if (draw == 1)
         {

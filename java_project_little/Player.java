@@ -7,6 +7,11 @@ public class Player
     int is_alive;
     int player;
     String png;
+    String shield = "png/spaceship_shield_250.png";
+    double dx;
+    double decreasing;
+    double speed;
+    int blocked;
 
     public Player(double x, double y, int player)
     {
@@ -17,22 +22,24 @@ public class Player
         rotation = 0;
         is_alive = 1;
         if (player == 1)
-            png = "png/testSpaceFirst.png";
+            png = "png/spaceship_first_250.png";
         else
-            png = "png/testSpaceSecond.png";
+            png = "png/spaceship_second_250.png";
+        dx = 2.5;
+        decreasing = 1;
+        speed = 0;
+        blocked = 0;
     }
 
     public void draw()
     {
         StdDraw.picture(x, y, png, rotation);
-//        StdDraw.setPenColor(StdDraw.RED);
-//        StdDraw.circle(x, y, 100);
     }
 
     //used to draw shield
-    public void draw(String image)
+    public void drawShield()
     {
-        StdDraw.picture(x, y, image, rotation);
+        StdDraw.picture(x, y, shield, rotation);
     }
 
     //the degree of rotation is into [0;360[
@@ -55,26 +62,90 @@ public class Player
     //also control the spaceship for it not to go off screen
     private void moveRight(int speed_bonus)
     {
-        if (x < 1080)
-            x += (9 + speed_bonus);
+        if (blocked == 0)
+        {
+            if (speed < 15 + speed_bonus)
+                speed += dx;
+            x += speed;
+        }
     }
 
     private void moveRight()
     {
-        if (x < 1080)
-            x += 9;
+        if (blocked == 0)
+        {
+            if (speed < 15)
+                speed += dx;
+            x += speed;
+        }
     }
 
     public void moveLeft(int speed_bonus)
     {
-        if (x > 72)
-            x -= (9 + speed_bonus);
+        if (blocked == 0)
+        {
+            if (speed > -15 - speed_bonus)
+                speed -= dx;
+            x += speed;
+        }
     }
 
     public void moveLeft()
     {
-        if (x > 72)
-            x -= 9;
+        if (blocked == 0)
+        {
+            if (speed > -15)
+                speed -= dx;
+            x += speed;
+        }
+    }
+
+    public void decreasing()
+    {
+        if (speed > 0)
+        {
+            speed -= decreasing;
+            if (speed < 0)
+                speed = 0;
+            x += speed;
+        }
+        else if (speed < 0)
+        {
+            speed += decreasing;
+            if (speed > 0)
+                speed = 0;
+            x += speed;
+        }
+    }
+
+    public void checkBoundaries()
+    {
+        if (x < 84)
+            blocked = -1;
+        if (x > 1260)
+            blocked = 1;
+    }
+
+    public void bounce()
+    {
+        if (blocked == 1)
+        {
+            if (speed > 0)
+                speed = -speed;
+            speed -= dx;
+            x += speed;
+            if (x <= 1068)
+                blocked = 0;
+        }
+        if (blocked == -1)
+        {
+            if (speed < 0)
+                speed = -speed;
+            speed += dx;
+            x += speed;
+            if (x >= 140)
+                blocked = 0;
+        }
     }
 
     public int isAlive()
@@ -88,12 +159,18 @@ public class Player
         {
             if (StdDraw.isKeyPressed(37))
                 moveLeft();
-            if (StdDraw.isKeyPressed(39))
+            else if (StdDraw.isKeyPressed(39))
                 moveRight();
+            else
+                decreasing();
+
             if (StdDraw.isKeyPressed(38))
                 rightRotation();
-            if (StdDraw.isKeyPressed(40))
+            else if (StdDraw.isKeyPressed(40))
                 leftRotation();
+
+            bounce();
+            checkBoundaries();
         }
     }
 
@@ -103,12 +180,18 @@ public class Player
         {
             if (StdDraw.isKeyPressed(37))
                 moveLeft(speed_bonus);
-            if (StdDraw.isKeyPressed(39))
+            else if (StdDraw.isKeyPressed(39))
                 moveRight(speed_bonus);
+            else
+                decreasing();
+
             if (StdDraw.isKeyPressed(38))
                 rightRotation();
-            if (StdDraw.isKeyPressed(40))
+            else if (StdDraw.isKeyPressed(40))
                 leftRotation();
+
+            bounce();
+            checkBoundaries();
         }
     }
 
@@ -118,13 +201,20 @@ public class Player
         {
             if (StdDraw.isKeyPressed(65))
                 moveLeft();
-            if (StdDraw.isKeyPressed(68))
+            else if (StdDraw.isKeyPressed(68))
                 moveRight();
+            else
+                decreasing();
+
             if (StdDraw.isKeyPressed(87))
                 rightRotation();
             if (StdDraw.isKeyPressed(83))
                 leftRotation();
+
+            bounce();
         }
+
+        checkBoundaries();
     }
 
     public int fireMulti(int is_shooting, Bullet[] bullets)
@@ -137,6 +227,7 @@ public class Player
             if  (i < 50)
             {
                 bullets[i] = new Bullet(x, y, rotation, player);
+                StdAudio.play("audio/fire.wav");
             }
             else
                 return -1;
@@ -156,6 +247,7 @@ public class Player
             if  (i < 50)
             {
                 bullets[i] = new Bullet(x, y, rotation, player);
+                StdAudio.play("audio/fire.wav");
             }
             else
                 return -1;
@@ -183,6 +275,8 @@ public class Player
     public void restart()
     {
         is_alive = 1;
+        speed = 0;
+        blocked = 0;
         x = start_x;
     }
 }
