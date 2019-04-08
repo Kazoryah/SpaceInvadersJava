@@ -5,16 +5,16 @@ import java.lang.Math;
 public class BonusFireRate
 {
     double x;
-    double y;
-    IngameTimer still_active;
-    IngameTimer still_drawn;
-    int draw;
-    String png = "png/bonus_fire_rate.gif";
+    double y; //coordinates
+    IngameTimer still_active; //timer to know if the player still has the bonus
+    IngameTimer still_drawn; //to know if the bonus needs to disappear
+    int draw; //to know the state of the bonus
+    String png = "png/bonus_fire_rate.gif"; //bonus image
 
     public BonusFireRate()
     {
         x = (double)(int)(Math.random() * 1920);
-        y = 140;
+        y = 140; //chosen
 
         //if it is outside the range of the spaceship, put it back in range
         if (x > 1800)
@@ -27,6 +27,7 @@ public class BonusFireRate
         draw = 1;
     }
 
+    //draw the bonus
     public void draw()
     {
         StdDraw.picture(x, y, png);
@@ -40,42 +41,49 @@ public class BonusFireRate
         still_active = new IngameTimer(2000);
     }
 
+    //getter for timer
     public int stillDrawn()
     {
-        return still_drawn.time;
+        return still_drawn.getTime();
     }
 
+    //getter for secodn timer
     public int stillActive()
     {
         if (still_active == null)
             return -1;
-        return still_active.time;
+        return still_active.getTime();
     }
 
+    //to know if the bonus is created, no if the bonus is to close from the
+    //player
     public int stayCreated(Player player)
     {
         double pX = player.getX();
 
-        if (x < pX - 200 || x > pX + 200)
+        if (x < pX - 200 || x > pX + 200) //chosen distance
             return 1;
         return 0;
     }
 
+    //check if the player caught the bonus
     public int checkState(Player player)
    {
-        if ((still_active != null && still_active.time == 0 )
-            || (still_drawn.time == 0 && draw == 1))
-            return 0;
-        else if (draw == 1)
-        {
-            double pX = player.getX();
+       //if the bonus is finished after being caught or after being caught
+       if (still_active != null && still_active.time == 0)
+           return 2; //for sound, to know if the player had the bonus effect
+       else if (still_drawn.time == 0 && draw == 1)
+           return 0;
+       else if (draw == 1) //if it is still drawn, ie not caught by the player
+       {                   //it is to avoid the player to be able to catch the
+           double pX = player.getX(); //same bonus mulitple times
 
-            if ((x - pX) * (x - pX) < 10000)
-            {
-                startBonus();
-                return 1;
-            }
-        }
-        return -1;
-    }
+           if ((x - pX) * (x - pX) < 10000) //100*100 chosen distance, it is the
+           {                                //radius of the bonus image
+               startBonus();
+               return 1;
+           }
+       }
+       return -1;
+   }
 }

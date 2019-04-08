@@ -5,7 +5,7 @@ import java.lang.Math;
 public class BonusLife
 {
     double x;
-    double y = 130;
+    double y;
     IngameTimer still_drawn;
     IngameTimer still_active;
     int draw;
@@ -14,6 +14,7 @@ public class BonusLife
     public BonusLife()
     {
         x = (double)(int)(Math.random() * 1920);
+        y = 130;
 
         if (x > 1800)
             x = 1800;
@@ -58,8 +59,9 @@ public class BonusLife
 
     public int checkState(Player player)
     {
-        if ((still_active != null && still_active.time == 0)
-            || (still_drawn.time == 0 && draw == 1))
+        if (still_active != null && still_active.time == 0)
+            return 2;
+        else if  (still_drawn.time == 0 && draw == 1)
             return 0;
         else if (draw == 1)
         {

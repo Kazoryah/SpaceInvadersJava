@@ -9,11 +9,14 @@ public class Game
         //enable the calcul off the next screen before displaying
         //increase fluidity
         StdDraw.enableDoubleBuffering();
-        StdAudio.loop("audio/background_low.wav");
+
         int level;
-        while (true)
+
+        StdAudio.loop("audio/background_low.wav");
+
+        while (true) //the whole ame loop
         {
-            IngameTimer timer1 = null;
+            IngameTimer timer1 = null; //timers for respawn
             IngameTimer timer2 = null;
             StdDraw.clear();
             int lives = 3; //chosen number of lives
@@ -58,9 +61,10 @@ public class Game
             //create a new SpaceInvaders object and initliaze Wrapper variables
             Wrapper.initializeVariables();
             SpaceInvaders SI = new SpaceInvaders(level);
-        //THE GAME
+        //THE PLAYING PART
             while (SI.aliensWon() == 0)
             {
+            //restart if no aliens left
                 if (SI.aliensLeft() == 0)
                 {
                     DrawAll.drawWon();
@@ -72,7 +76,7 @@ public class Game
                     Wrapper.initializeVariables();
                 }
 
-            //pause
+            //pause screen
                 if (StdDraw.isKeyPressed(80))
                 {
                     DrawAll.drawPause();
@@ -86,6 +90,7 @@ public class Game
                             break;
                     }
                 }
+
             //calcul part
                 SI.movePlayer();
                 SI.updateBullets();
@@ -143,6 +148,7 @@ public class Game
                         DrawAll.drawDeadScreen();
                }
 
+           //check game state (finished, lost, win
                if (SI.player2.isAlive() == 0)
                {
                     DrawAll.drawDead(SI.player2);
@@ -164,7 +170,9 @@ public class Game
                 //we literally see nothing
                 StdDraw.show(10);
             }
+
             StdAudio.play("audio/game_over_v3.wav");
+
             if (SI.aliensWon() == 1)
                 DrawAll.drawAliensWon();
 
@@ -174,13 +182,11 @@ public class Game
                 DrawAll.drawDeadPlayer1();
             else if (lives2 == 0)
                 DrawAll.drawDeadPlayer2();
+
             StdDraw.show();
 
             EndTimer timer = new EndTimer(1000);
             synchronized (Wrapper.lock){Wrapper.lock.wait();}
-
-            if (SI.aliensWon() == 1)
-                break;
 
             IngameTimer timer3 = null;
             int n = 5;
@@ -189,6 +195,7 @@ public class Game
                 changed = Scoreboard.checkSolo();
             else
                 changed = Scoreboard.checkMulti();
+
             //wait for key pressed
             while(true)
             {

@@ -7,9 +7,6 @@ public class SpaceInvaders
     Player player;
     Player player2;
     Bullet[] bullets; //all the bullets of the player
-    Bullet last_bullet; //last bullet reference, to get its time variable to
-                        //know when the player can shoot again
-    Bullet last_bullet2;
     Protections[] protections;
 //====
     Alien[][] aliens; //all the aliens
@@ -24,12 +21,12 @@ public class SpaceInvaders
     int aliens_killed; //number of alien killed, for Game to know when to
                       //increase the speed of the aliens
     double difficulty; //used to compare a random, to know if the alien fires
-    int aliens_won;
-    int aliens_left;
+    int aliens_won; //to know if the aliens won when they are too low
+    int aliens_left; //to know how many aliens are left
 
-    public SpaceInvaders(int lvl)
+    public SpaceInvaders(int level)
     {
-        level = lvl;
+        this.level = level;
         if (level != 3)
             player = new Player(960, 140, 1); //coordinates chosen
         else
@@ -47,40 +44,29 @@ public class SpaceInvaders
         aliens_killed = 0;
         aliens_left = 36;
         aliens_won = 0;
-        last_bullet2 = new Bullet(0, 0, 0, 2);
-        last_bullet = new Bullet(0, 0, 0, 1); //initiated to avoid null
-        difficulty = 0.03;                    //exception
+        difficulty = 0.03; //chosen rate of fire of the aliens
         aliens_steps = 0;
         initializeProtections();
      }
 
-    //function that catch any key pressed:
-    //left and right arrows to move left or right
-    //up and down arrows to rotate right and left
-    //space to fire
+    //function to call player movement functions
     public void movePlayer()
     {
         if (level != 3)
         {
             player.move(Wrapper.extra_speed);
-            int i = player.fire(last_bullet.getTime(), bullets);
-            if (i != -1)
-                last_bullet = bullets[i];
+            player.fire(bullets);
         }
         else
         {
             player.moveMulti();
             player2.move();
-            int i = player.fire(last_bullet.getTime(), bullets);
-            if (i != -1)
-                last_bullet = bullets[i];
-            i = player2.fireMulti(last_bullet2.getTime(), bullets);
-            if (i != -1)
-                last_bullet2 = bullets[i];
+            player.fire(bullets);
+            player2.fireMulti(bullets);
         }
     }
 
-    //function to draw player, aliens, bullets, bonuses
+    //function to draw player, aliens, bullets, bonuses and protections
     public void drawEverything()
     {
         //draw bullets
@@ -159,6 +145,7 @@ public class SpaceInvaders
             aliens[0][j].shooter();
     }
 
+    //create the protections
     public void initializeProtections()
     {
         if (level == 1)
@@ -171,13 +158,14 @@ public class SpaceInvaders
             protections = new Protections[]{null, null};
     }
 
-    //update which aliems are on the sides
+    //update which aliens are on the sides
     //update the postion of all aliens
     //look if the shooter is too low (end game)
     public void updateAliens()
     {
         for (int j = 0; j < 9; j++)
         {
+            //make shooters shoot, look if he is too low
             int row = shooter_row[j];
             if (row < 4)
             {
@@ -190,6 +178,7 @@ public class SpaceInvaders
                     aliens_won = 1;
             }
 
+            //make aliens move and go down if needed
             for (int i = 0; i < 4; i++)
             {
                 if (aliens[i][j] != null)
@@ -321,6 +310,7 @@ public class SpaceInvaders
                     }
                 }
             }
+
             //check if bullet touch a protection
             if (bullets[i] != null && protections[0] != null
                 && protections[0].hasTouched(bullets[i]) == 1)
@@ -362,18 +352,20 @@ public class SpaceInvaders
         }
     }
 
+    //function to see if there is still a protection, and call the function
+    //to update image
     public void updateProtections()
     {
         if (protections[0] != null)
         {
-            protections[0].checkColor();
+            protections[0].checkState();
             if (protections[0].getLives() == 0)
                 protections[0] = null;
         }
 
         if (protections[1] != null)
         {
-            protections[1].checkColor();
+            protections[1].checkState();
             if (protections[1].getLives() == 0)
                 protections[1] = null;
         }
@@ -423,6 +415,7 @@ public class SpaceInvaders
         return aliens_killed;
     }
 
+    //getter for aliens_won
     public int aliensWon()
     {
         return aliens_won;

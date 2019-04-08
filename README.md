@@ -10,73 +10,90 @@
         - noise when aliens move/go down
         - noise when players fire (adjust where the sound comes from)
     - privatize variables and have getters/setters
-    - scaling screen size
-    - convert the images that need rescaling
     - bar indicating bonus state
     - bonus vessel
     - distance from the bottom from which the game is over
     - lifes to aliens (shield color)
     - bigger bullet when player waited enough
     - special aliens
-    - continue updating screen images
-    - update README (and add a part to explain the choices for the game structure)
+    - continue updating screen imagesi
+    - alternate screens menu to make sentences flash
+    - button to make the player stop instantly
+    - give shooter a shield when he has killed enough enemies without dying
+    - manage pause timers when there is a bonus
+    - bullets destroyed buy player bullet
 
 ## GAME CONTROLS
     - start menu: '1' to start with bonuses
                   '2' for increase alien speed, no bonus
                   '3' mode 2 players
+                  'escape' to quit
+                  'm' for the lore (press 'r' to return to menu)
     - ingame: arrows left/right to move left/right
               arrows up down to rotate left/right
               space to fire
               if mode 2 players:
-                    arrows and control
+                    arrows and ctrl
                     wasd and space bar
               'p' to pause the game
               'r' to resume to the game after pause
-    - end game: escape to quit (no effect yet)
-                 'r' to restart
+              'escape' to quit
+    - end game: 'escape' to quit
+                'r' to restart
+
 ## GAME MECHANICS
     - Only the aliens at the bottom can shoot and be shot
+    - You have barriers that have 15 lives, get red when 5 lives left
+        nothing can pass through and EACH bullet destroyed by the barrier
+        lessen the lives of 1 life
+    - mode 2 players, you win if your partner died 3 times and have a better
+        score, otherwise it's an equality, but your score in the scoreboard
+        is the sum of both scores, to make collaboration counts
+    - the points given depend on the row of the alien
 
 ## GAME BONUSES
-    - black spaceship: increase fire rate
+    - red scope: increase fire rate
     - same spaceship: extra life
-    - funny black spaceship: shied (transform player's spaceship)
-    - alien head: double player's speed
+    - lightning: shied (transform player's spaceship)
+    - cherries: double player's speed
 
 ## CODE
-### The game is composed of multiple classes: AlienBullet, Alien, BonusFireRate,BonusLife, Bullet, Game, Player, SpaceInvaders.
-    - Player:
-        x, y -> position
-        rotation -> degree of rotation of the spaceship (left/right)
-        png -> image of the spaceship
-        function draw() to draw the spaceship (see StdDraw.picture for details)
-        functions to move and rotate, and a getter for is_alive
-    - Alien:
-        its position, image, function draw()
-    - AlienBullet:
-        position, draw(), and function to make it move down
-    - Bullet:
-        position of the bullet, its rotation (direction) in radian and degree,
-            we need one to draw the bullet and the other to calculate its next
-            position
-        function to control the fire rate (put variable time at 0 when the next
-            bullet can be fired
-        side is a variable to know which side the bullet is going, not the
-            same calculus between left direction and right direction in move()
-    - BonusFireRate:
-        position of the bonus on the screen
-        variable time to know when the BonusFireRate object needs to ne delete
-        variable has_ended to know when the bonus effect is finished
-    - SpaceInvaders:
-            contains all functions for the game to work properly
-            uses all previous classes, see .java to know more about the
-            functions
-    - Game:
-        this class is the final class, it uses the SpaceInvaders class and
-            manage all the game and call all the functions neede written in
-            SpaceInvaders. Note that this class is very important beacause the
-            function main() is static, and all classes here as we are in Object
-            Oriented Programming are non-static. So we need a static function
-            to call all non-static others from other classes. (That's how I
-            understand it, I may be wrong, but it works so...)
+### This game is composed of many classes (see each class code to know more about
+### what they are doing):
+####    Alien
+####    AlienBullet
+####    Bonus
+    - This class has function called by the SpaceInvaders class, to managed all
+      bonuses.
+    - Every bonuses have the same structure, so only the first one is
+      commented.
+####    BonusFireRate
+####    BonusLife
+####    BonusShield
+####    BonusSpeed
+####    Bullet
+####    DrawAll
+    - This class has functions called by Game class to draw all screens and
+      events that need to appear during the game.
+####    EndTimer
+    - This class is used by Game class to manage waiting time of game events.
+####    Game
+    - This class is the final class, it manages all the game and call all the
+      functions needed to make the game works properly written in SpaceInvaders
+      class. Note that this class is very important because it contains the
+      function main() that is static, and allows the computer to create an
+      instance of the program, it cant be created as an object.
+      Most classes here as we are in Object Oriented Programming are non-static
+      because we need to create objects related to the classs. So we need a
+      static function to create objects from other classes (that's how I
+      understand it, I may be not fully correct, but it works so...).
+####    IngameTimer
+    - This class is used by many others to manage all timing during the game.
+####    Player
+####    Protections
+####    Scoreboard
+####    SpaceInvaders
+    - Contains all functions for the game to work properly uses all previous
+      "sub-"classes.
+####    Wrapper
+    - Having such a class is the way to do a "pass by reference" in Java.

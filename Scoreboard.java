@@ -4,6 +4,9 @@ import java.io.PrintWriter;
 
 public final class Scoreboard
 {
+    //classic scoreboard manipulation
+    //the only thing is that the scores are saved in a .txt file and need to be
+    //fetched, and rewriitten
     public static int checkSolo() throws Exception
     {
         int changed = -1;

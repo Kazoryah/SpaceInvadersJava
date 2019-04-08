@@ -16,12 +16,11 @@ public class BonusShield
         x = (double)(int)(Math.random() * 1920);
         y = 140;
 
-        //if it is outside the range of the spaceship, put it back in range
         if (x > 1800)
             x = 1800;
         if (x < 120)
             x = 120;
-        //first timer to know when the bonus needs to disappear
+
         still_drawn = new IngameTimer(2000);
         still_active = null;
         draw = 1;
@@ -32,8 +31,6 @@ public class BonusShield
         StdDraw.picture(x, y, png);
     }
 
-    //if the player catch the bonus, this function will be called
-    //it starts a knew timer to know when the bonus is finished
     public void startBonus()
     {
         draw = 0;
@@ -64,7 +61,7 @@ public class BonusShield
     public int checkState(Player player)
     {
         if (still_active != null && still_active.time == 0)
-            return 2; //for sound, to know if the player had the bonus effect
+            return 2;
         else if (still_drawn.time == 0 && draw == 1)
             return 0;
         else if (draw == 1)

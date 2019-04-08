@@ -1,15 +1,17 @@
 public final class Bonus
 {
+    //function to create the bonus
     public static void createBonusFireRate(Player player)
     {
         Wrapper.bonus_fire_rate = new BonusFireRate();
         //check if the bonus is not to close from the player
         if (Wrapper.bonus_fire_rate.stayCreated(player) == 1)
            Wrapper.is_bonus = 1;
-        else//if to close, bonus canceled
+        else //if to close, bonus canceled
             Wrapper.bonus_fire_rate = null;
     }
 
+    //function to see is the bonus has to be destroyed or becomes active
     public static void checkBonusFireRate(Player player)
     {
         int state = Wrapper.bonus_fire_rate.checkState(player);
@@ -26,10 +28,9 @@ public final class Bonus
     public static void createBonusLife(Player player)
     {
         Wrapper.bonus_life = new BonusLife();
-        //check if the bonus is not to close from the player
         if (Wrapper.bonus_life.stayCreated(player) == 1)
             Wrapper.is_bonus = 2;
-        else //if to close, bonus canceled
+        else
             Wrapper.bonus_life = null;
     }
 
@@ -48,10 +49,9 @@ public final class Bonus
     public static void createBonusSpeed(Player player)
     {
         Wrapper.bonus_speed = new BonusSpeed();
-        //check if the bonus is not to close from the player
         if (Wrapper.bonus_speed.stayCreated(player) == 1)
             Wrapper.is_bonus = 3;
-        else//if to close, bonus canceled
+        else
             Wrapper.bonus_speed = null;
     }
 
@@ -76,10 +76,9 @@ public final class Bonus
     public static void createBonusShield(Player player)
     {
         Wrapper.bonus_shield = new BonusShield();
-        //check if the bonus is not to close from the player
         if (Wrapper.bonus_shield.stayCreated(player) == 1)
             Wrapper.is_bonus = 4;
-        else//if to close, bonus canceled
+        else
             Wrapper.bonus_shield = null;
     }
 

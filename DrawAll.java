@@ -33,6 +33,8 @@ public final class DrawAll
     static String pause = "png/screen_pause.png";
     static String more = "png/screen_more.png";
 
+//every coordinates has been chosen
+
     public static void drawStart()
     {
         StdDraw.picture(960, 540, start);

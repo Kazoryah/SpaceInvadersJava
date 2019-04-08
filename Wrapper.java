@@ -20,12 +20,17 @@ public class Wrapper
 
     public static Object lock = new Object();
 
+    //for Game class to know if the player caught an extra life, everytime
+    //this function is called, extra_life is reset to 0 to avoid the player
+    //to gain more than one life at a time
     public static int extraLife()
     {
         int res = extra_life;
         extra_life = 0;
         return res;
     }
+
+    //init variables
     public static void initializeVariables()
     {
         moving_right = 1;
@@ -40,6 +45,7 @@ public class Wrapper
         bonus_shield = null;
     }
 
+    //reinitialize the movement of the aliens after restart
     public static void repositioning()
     {
         moving_right = 1;

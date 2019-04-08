@@ -11,6 +11,7 @@ public class EndTimer
             @Override
             public void run()
             {
+                //notify when the timer is down
                 synchronized (Wrapper.lock){Wrapper.lock.notify();}
                 timer.cancel();
             }
