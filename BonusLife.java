@@ -14,7 +14,7 @@ public class BonusLife
     public BonusLife()
     {
         x = (double)(int)(Math.random() * 1920);
-        y = 130;
+        y = 145;
 
         if (x > 1800)
             x = 1800;

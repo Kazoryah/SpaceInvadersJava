@@ -12,6 +12,8 @@ public class Game
 
         int level;
         int number_of_wins = 0;
+        RefreshTimer refresh_timer; //needed to get the same refresh rate
+                                    //between every computer
 
         StdAudio.loop("audio/background_low.wav");
 
@@ -66,9 +68,15 @@ public class Game
             //create a new SpaceInvaders object and initliaze Wrapper variables
             Wrapper.initializeVariables();
             SpaceInvaders SI = new SpaceInvaders(level, number_of_wins);
+            refresh_timer = new RefreshTimer(1); //just to avoid a null
+                            //comparision every iteration of the loop below
         //THE PLAYING PART
             while (SI.aliensWon() == 0)
             {
+                if (refresh_timer.getTime() == 0)
+                {
+                    refresh_timer = new RefreshTimer(10);
+
             //restart if no aliens left
                 if (SI.aliensLeft() == 0)
                 {
@@ -170,7 +178,7 @@ public class Game
                         SI.player2.restart();
                     }
                 }
-
+                }
                 //need to pause the display of the images, otherwise
                 //we literally see nothing
                 StdDraw.show(10);

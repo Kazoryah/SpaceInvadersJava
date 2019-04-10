@@ -18,7 +18,7 @@ public class AlienBonus
     {
         x = -100;
         y = 1030;
-        png = "png/alien_300.png";
+        png = "png/alien_bonus_red.png";
         speed = 10;
         timer = new IngameTimer(-1);
         timer_score = null;

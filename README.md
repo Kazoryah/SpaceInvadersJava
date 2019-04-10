@@ -12,7 +12,6 @@
         - noise when barriers are down
         - sound for bonus vessel
     - bar indicating bonus state
-    - lifes to aliens (shield color) -> manage how much lives and shields
     - bigger bullet when player waited enough
     - special aliens
     - continue updating screen images
@@ -89,6 +88,9 @@
     - This class is used by many others to manage all timing during the game.
 ####    Player
 ####    Protections
+####    RefreshTimer
+    - This class is a simplyfied timer, to get a constant refresh rate no matter
+      the computer your are on.
 ####    Scoreboard
 ####    SpaceInvaders
     - Contains all functions for the game to work properly uses all previous

@@ -13,6 +13,7 @@ Game.java
 IngameTimer.java
 Player.java
 Protections.java
+RefreshTimer.java
 Scoreboard.java
 SpaceInvaders.java
 StdAudio.java

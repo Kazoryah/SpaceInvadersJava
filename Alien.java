@@ -25,7 +25,7 @@ public class Alien
         start_y = y;
         shooter = 0;
         last_bullet = new AlienBullet(0, 0); //init last_bullet to avoid null
-        timer = new IngameTimer(1);                               //exception
+        timer = new IngameTimer(1000);                               //exception
         lives = 1 + extra_lives;
     }
 
