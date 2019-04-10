@@ -5,7 +5,7 @@ public final class Bonus
         Wrapper.bonus_fire_rate = new BonusFireRate();
         //check if the bonus is not to close from the player
         if (Wrapper.bonus_fire_rate.stayCreated(player) == 1)
-           Wrapper.is_bonus = 1;
+            Wrapper.is_bonus = 1;
         else//if to close, bonus canceled
             Wrapper.bonus_fire_rate = null;
     }

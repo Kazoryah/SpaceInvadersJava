@@ -1,6 +1,7 @@
 public class Protections
 {
     double x;
+    double y;
 
     String red1 = "png/barrier_red_1.png"; //images when the barrier is runing
     String red2 = "png/barrier_red_2.png"; //out of lives
@@ -18,6 +19,7 @@ public class Protections
             x = 640; //chosen coordinates
         else
             x = 1280;
+        y = 250;
 
         if (color == 1)
         {
@@ -39,9 +41,9 @@ public class Protections
     public void draw()
     {
         if (state == 0)
-            StdDraw.picture(x, 250, png1);
+            StdDraw.picture(x, y, png1);
         else
-            StdDraw.picture(x, 250, png2);
+            StdDraw.picture(x, y, png2);
     }
 
     //check the lives and the picture to display
@@ -86,7 +88,8 @@ public class Protections
     //check if the protection has been touched by a player bullet
     public int hasTouched(Bullet bullet)
     {
-        if (bullet.getY() >= 230) //chosen are, by testing
+        double bY = bullet.getY();
+        if (bY >= 230 && bY <= 260) //chosen are, by testing
         {
             double bX = bullet.getX();
             if (bX >= x - 100 && bX <= x + 120) //chosen area, by testing

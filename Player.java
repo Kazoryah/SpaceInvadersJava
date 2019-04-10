@@ -178,6 +178,8 @@ public class Player
                 moveLeft();
             else if (StdDraw.isKeyPressed(39))
                 moveRight();
+            else if (StdDraw.isKeyPressed(16))
+                speed = 0;
             else
                 decreasing();
 
@@ -199,6 +201,8 @@ public class Player
                 moveLeft(speed_bonus);
             else if (StdDraw.isKeyPressed(39))
                 moveRight(speed_bonus);
+            else if (StdDraw.isKeyPressed(16))
+                speed = 0;
             else
                 decreasing();
 
@@ -221,6 +225,8 @@ public class Player
                 moveLeft();
             else if (StdDraw.isKeyPressed(68))
                 moveRight();
+            else if (StdDraw.isKeyPressed(70))
+                speed = 0;
             else
                 decreasing();
 

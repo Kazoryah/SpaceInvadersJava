@@ -11,26 +11,36 @@ public class Alien
     String png = "png/alien_300.png"; //alien image
     AlienBullet last_bullet; //alien last bullet, to know if it can shoot
     IngameTimer timer; //to make the aliens stop a bit after they went down
+    int lives;
+    String clear = "png/alien_shield_clear_purple.png";
+    String purple = "png/alien_shield_purple.png";
+    String red = "png/alien_shield_red.png";
 
     //constructor
-    public Alien(int i, int j)
+    public Alien(int i, int j, int extra_lives)
     {
-        x = 600 + 100 * j;
-        y = 800 + 80 * i; //chosen distances
+        x = 600 + 115 * j;
+        y = 750 + 80 * i; //chosen distances
         start_x = x;
         start_y = y;
         shooter = 0;
         last_bullet = new AlienBullet(0, 0); //init last_bullet to avoid null
         timer = new IngameTimer(1);                               //exception
+        lives = 1 + extra_lives;
     }
 
     //draw alien
     public void draw()
     {
-        if (this.shooter == 0)
+        if (shooter == 0)
             StdDraw.picture(x, y, pngShield);
+        else if (lives >= 3)
+            StdDraw.picture(x, y, red);
+        else if (lives == 2)
+            StdDraw.picture(x, y, purple);
         else
             StdDraw.picture(x, y, png);
+        StdDraw.text(x,y, Integer.toString(lives));
     }
 
     //setter to make the alien a shooter one
@@ -40,7 +50,7 @@ public class Alien
     }
 
     //move the alien
-    public void move(int alien_speed)
+    public void move(double alien_speed)
     {
         if (timer.time == 0)
         {
@@ -54,7 +64,7 @@ public class Alien
     //move the alien down
     public void moveDown()
     {
-        y -= 25; //chosen distance
+        y -= 40; //chosen distance
         timer = new IngameTimer(400); //chosen freeze time
     }
 
@@ -74,13 +84,14 @@ public class Alien
 
     }
 
-    //check if aliens reached the bottom of the screen
+    //check if aliens reached the bottom of the screen or the barrier level
     public int isTooLow()
     {
-        if (y <= 240)
+        if (y <= 200)
             return 1;
-        else
-            return 0;
+        else if (y <= 280)
+            return 2;
+        return 0;
     }
 
     //make the alien shoot
@@ -121,5 +132,21 @@ public class Alien
     public double getY()
     {
         return y;
+    }
+
+    public int getLives()
+    {
+        return lives;
+    }
+
+    public int lessenLives()
+    {
+        if (shooter == 1)
+        {
+            lives--;
+            return lives;
+        }
+        else
+            return -1;
     }
 }

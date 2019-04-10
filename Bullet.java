@@ -76,8 +76,16 @@ public class Bullet
         double aY = alien.getY();
 
         if ((x - aX) * (x - aX) + (y - aY) * (y - aY) <= 1849) //43x43
-            return 1;                           //I chose 43 because it is the
-        return 0;                               //alien size on the screen
+        {                                       //I chose 43 because it is the
+            int i = alien.lessenLives();        //alien size on the screen
+            if (i == 0)
+                return 1;
+            else if (i == -1)
+                return -1; //if the alien wasnt a shooter
+            else
+                return 2; //if the alien was a shooter but had multiple lives
+        }
+        return 0;
     }
 
     //check is the bullet is out of screen and needs to be destroyed
@@ -107,5 +115,10 @@ public class Bullet
     public double getY()
     {
         return y;
+    }
+
+    public double getPlayer()
+    {
+        return launched_by_player;
     }
 }

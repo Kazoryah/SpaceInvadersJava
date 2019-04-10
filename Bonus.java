@@ -15,11 +15,13 @@ public final class Bonus
     public static void checkBonusFireRate(Player player)
     {
         int state = Wrapper.bonus_fire_rate.checkState(player);
-        if (state == 0)
+        if (state == 0 || state == 2)
         {
             Wrapper.is_bonus = 0;
             Wrapper.rate = 500;
             Wrapper.bonus_fire_rate = null;
+            //if (state == 2)
+            //add sound
         }
         else if (state == 1)
             Wrapper.rate = 100;
@@ -37,10 +39,12 @@ public final class Bonus
     public static void checkBonusLife(Player player)
     {
         int state = Wrapper.bonus_life.checkState(player);
-        if (state == 0)
+        if (state == 0 || state == 2)
         {
             Wrapper.is_bonus = 0;
             Wrapper.bonus_life = null;
+            //if (state == 2)
+            //add sound
         }
         else if (state == 1)
             Wrapper.extra_life = 1;

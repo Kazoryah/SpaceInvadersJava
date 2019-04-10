@@ -9,19 +9,17 @@
         - noise when player moves
         - noise when aliens move/go down
         - noise when players fire (adjust where the sound comes from)
-    - privatize variables and have getters/setters
+        - noise when barriers are down
+        - sound for bonus vessel
     - bar indicating bonus state
-    - bonus vessel
-    - distance from the bottom from which the game is over
-    - lifes to aliens (shield color)
+    - lifes to aliens (shield color) -> manage how much lives and shields
     - bigger bullet when player waited enough
     - special aliens
-    - continue updating screen imagesi
+    - continue updating screen images
     - alternate screens menu to make sentences flash
-    - button to make the player stop instantly
     - give shooter a shield when he has killed enough enemies without dying
     - manage pause timers when there is a bonus
-    - bullets destroyed buy player bullet
+    - bullets destroyed by player bullet
 
 ## GAME CONTROLS
     - start menu: '1' to start with bonuses
@@ -29,12 +27,12 @@
                   '3' mode 2 players
                   'escape' to quit
                   'm' for the lore (press 'r' to return to menu)
-    - ingame: arrows left/right to move left/right
+    - ingame: arrows left/right to move left/right, shift to stop
               arrows up down to rotate left/right
               space to fire
               if mode 2 players:
-                    arrows and ctrl
-                    wasd and space bar
+                    arrows and ctrl, shift to stop
+                    'wasd' and space bar, 'f' to stop
               'p' to pause the game
               'r' to resume to the game after pause
               'escape' to quit

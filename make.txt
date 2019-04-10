@@ -1,3 +1,4 @@
+AlienBonus.java
 AlienBullet.java
 Alien.java
 BonusFireRate.java
@@ -11,6 +12,8 @@ EndTimer.java
 Game.java
 IngameTimer.java
 Player.java
+Protections.java
+Scoreboard.java
 SpaceInvaders.java
 StdAudio.java
 StdDraw.java

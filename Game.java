@@ -11,6 +11,7 @@ public class Game
         StdDraw.enableDoubleBuffering();
 
         int level;
+        int number_of_wins = 0;
 
         StdAudio.loop("audio/background_low.wav");
 
@@ -30,7 +31,11 @@ public class Game
                 {
                     DrawAll.drawMore();
                     StdDraw.show();
-                    while (!StdDraw.isKeyPressed(82)){} //R key
+                    while (!StdDraw.isKeyPressed(82)) //R key
+                    {
+                        if (StdDraw.isKeyPressed(27))
+                            System.exit(0);
+                    }
                 }
                 else
                 {
@@ -60,7 +65,7 @@ public class Game
             StdAudio.play("audio/start_click_v2.wav");
             //create a new SpaceInvaders object and initliaze Wrapper variables
             Wrapper.initializeVariables();
-            SpaceInvaders SI = new SpaceInvaders(level);
+            SpaceInvaders SI = new SpaceInvaders(level, number_of_wins);
         //THE PLAYING PART
             while (SI.aliensWon() == 0)
             {
@@ -72,7 +77,7 @@ public class Game
                     StdAudio.play("audio/win.wav");
                     EndTimer timer = new EndTimer(3000);
                     synchronized (Wrapper.lock){Wrapper.lock.wait();}
-                    SI = new SpaceInvaders(level);
+                    SI = new SpaceInvaders(level, ++number_of_wins);
                     Wrapper.initializeVariables();
                 }
 
@@ -174,7 +179,10 @@ public class Game
             StdAudio.play("audio/game_over_v3.wav");
 
             if (SI.aliensWon() == 1)
+            {
                 DrawAll.drawAliensWon();
+                DrawAll.drawDead(SI.player);
+            }
 
             if (lives == 0 && level != 3)
                 DrawAll.drawAliensWon();
