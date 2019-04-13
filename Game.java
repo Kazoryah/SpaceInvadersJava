@@ -73,116 +73,120 @@ public class Game
         //THE PLAYING PART
             while (SI.aliensWon() == 0)
             {
-                if (refresh_timer.getTime() == 0)
+                //if (refresh_timer.getTime() == 0)
                 {
-                    refresh_timer = new RefreshTimer(10);
+                    //refresh_timer = new RefreshTimer(20);
 
-            //restart if no aliens left
-                if (SI.aliensLeft() == 0)
-                {
-                    DrawAll.drawWon();
-                    StdDraw.show();
-                    StdAudio.play("audio/win.wav");
-                    EndTimer timer = new EndTimer(3000);
-                    synchronized (Wrapper.lock){Wrapper.lock.wait();}
-                    SI = new SpaceInvaders(level, ++number_of_wins);
-                    Wrapper.initializeVariables();
-                }
-
-            //pause screen
-                if (StdDraw.isKeyPressed(80))
-                {
-                    DrawAll.drawPause();
-                    StdDraw.show();
-                    while(true)
+                //restart if no aliens left
+                    if (SI.aliensLeft() == 0)
                     {
-                        if (StdDraw.isKeyPressed(27)) //escape key
-                            System.exit(0);
-
-                        if (StdDraw.isKeyPressed(82)) //R key
-                            break;
+                        DrawAll.drawWon();
+                        StdDraw.show();
+                        StdAudio.play("audio/win.wav");
+                        WaitTimer timer = new WaitTimer(3000);
+                        synchronized (Wrapper.lock){Wrapper.lock.wait();}
+                        SI = new SpaceInvaders(level, ++number_of_wins);
+                        Wrapper.initializeVariables();
                     }
-                }
 
-            //calcul part
-                SI.movePlayer();
-                SI.updateBullets();
-                SI.updateAliens();
-
-                if (level != 2)
-                    SI.updateProtections();
-
-                if (level == 1)
-                {
-                    if (SI.player.isAlive() == 1)
-                        SI.updateBonus();
-                    if (Wrapper.extraLife() == 1)
-                        lives++;
-                }
-
-            //drawing part
-                StdDraw.clear();
-                //draw background
-                DrawAll.drawBackground();
-                //go SpaceInvaders.java to see what it draws
-                SI.drawEverything();
-                //draw rocket lives
-                DrawAll.drawLivesFirst(lives);
-
-                if (level != 3)
-                    DrawAll.drawPoints(SI);
-                else
-                {
-                    DrawAll.drawPointsMulti(SI);
-                    DrawAll.drawLivesSecond(lives2);
-                }
-
-            //check if player is still alive
-                if (SI.player.isAlive() == 0)
-                {
-                    DrawAll.drawDead(SI.player);
-                    if (timer1 == null)
+                //pause screen
+                    if (StdDraw.isKeyPressed(80))
                     {
-                        timer1 = new IngameTimer(1000);
-                        lives--;
-                        if (lives == 0)
-                            break;
+                        SI.pause();
+                        DrawAll.drawPause();
+                        StdDraw.show();
+                        while(true)
+                        {
+                            if (StdDraw.isKeyPressed(27)) //escape key
+                                System.exit(0);
+
+                            if (StdDraw.isKeyPressed(82)) //R key
+                                break;
+                        }
+                        SI.resume();
                     }
-                    else if (timer1.time == 0)
+
+                //calcul part
+                    SI.movePlayer();
+                    SI.updateBullets();
+                    SI.updateAliens();
+
+                    if (level != 2)
+                        SI.updateProtections();
+
+                    if (level == 1)
                     {
-                        timer1 = null;
-                        if (level != 3)
-                            SI.restart();
-                        else
-                            SI.player.restart();
-                        Wrapper.repositioning();
+                        if (SI.player.isAlive() == 1)
+                            SI.updateBonus();
+                        if (Wrapper.extraLife() == 1)
+                            lives++;
                     }
+
+                //drawing part
+                    StdDraw.clear();
+                    //draw background
+                    DrawAll.drawBackground();
+                    //go SpaceInvaders.java to see what it draws
+                    SI.drawEverything();
+                    //draw rocket lives
+                    DrawAll.drawLivesFirst(lives);
+
                     if (level != 3)
-                        DrawAll.drawDeadScreen();
-               }
+                        DrawAll.drawPoints(SI);
+                    else
+                    {
+                        DrawAll.drawPointsMulti(SI);
+                        DrawAll.drawLivesSecond(lives2);
+                    }
 
-           //check game state (finished, lost, win
-               if (SI.player2.isAlive() == 0)
-               {
-                    DrawAll.drawDead(SI.player2);
-                    if (timer2 == null)
+                //check if player is still alive
+                    if (SI.player.isAlive() == 0)
                     {
-                        timer2 = new IngameTimer(1000);
-                        lives2--;
-                        if (lives2 == 0)
-                            break;
+                        DrawAll.drawDead(SI.player);
+                        if (timer1 == null)
+                        {
+                            timer1 = new IngameTimer(1000);
+                            lives--;
+                            if (lives == 0)
+                                break;
+                        }
+                        else if (timer1.time == 0)
+                        {
+                            timer1 = null;
+                            if (level != 3)
+                                SI.restart();
+                            else
+                                SI.player.restart();
+                            Wrapper.repositioning();
+                        }
+                        if (level != 3)
+                            DrawAll.drawDeadScreen();
+                   }
+
+               //check game state (finished, lost, win
+                   if (SI.player2.isAlive() == 0)
+                   {
+                        DrawAll.drawDead(SI.player2);
+                        if (timer2 == null)
+                        {
+                            timer2 = new IngameTimer(1000);
+                            lives2--;
+                            if (lives2 == 0)
+                                break;
+                        }
+                        else if (timer2.time == 0)
+                        {
+                            timer2 = null;
+                            SI.player2.restart();
+                        }
                     }
-                    else if (timer2.time == 0)
-                    {
-                        timer2 = null;
-                        SI.player2.restart();
-                    }
-                }
                 }
                 //need to pause the display of the images, otherwise
                 //we literally see nothing
                 StdDraw.show(10);
             }
+
+            number_of_wins = 0;
 
             StdAudio.play("audio/game_over_v3.wav");
 
@@ -201,7 +205,7 @@ public class Game
 
             StdDraw.show();
 
-            EndTimer timer = new EndTimer(1000);
+            WaitTimer timer = new WaitTimer(1000);
             synchronized (Wrapper.lock){Wrapper.lock.wait();}
 
             IngameTimer timer3 = null;

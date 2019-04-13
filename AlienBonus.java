@@ -6,7 +6,7 @@ public class AlienBonus
     double x;
     double y; //position
     String png; //image
-    IngameTimer timer;
+    AlienBonusTimer timer;
     double speed;
     int is_drawn;
     int is_alive;
@@ -17,10 +17,10 @@ public class AlienBonus
     public AlienBonus()
     {
         x = -100;
-        y = 1030;
+        y = 1025;
         png = "png/alien_bonus_red.png";
         speed = 10;
-        timer = new IngameTimer(-1);
+        timer = new AlienBonusTimer();
         timer_score = null;
         is_drawn = 0;
         is_alive = 0;
@@ -119,10 +119,24 @@ public class AlienBonus
 
     public void restart()
     {
-        timer = new IngameTimer(-1);
+        timer = new AlienBonusTimer();
         x = -100;
         timer_score = null;
         is_drawn = 0;
         is_alive = 0;
+    }
+
+    public void pause()
+    {
+        timer.pause();
+        if (timer_score != null)
+            timer_score.pause();
+    }
+
+    public void resume()
+    {
+        timer.resume();
+        if (timer_score != null)
+            timer_score.resume();
     }
 }

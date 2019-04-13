@@ -11,14 +11,12 @@
         - noise when players fire (adjust where the sound comes from)
         - noise when barriers are down
         - sound for bonus vessel
-    - bar indicating bonus state
-    - bigger bullet when player waited enough
     - special aliens
     - continue updating screen images
     - alternate screens menu to make sentences flash
-    - give shooter a shield when he has killed enough enemies without dying
-    - manage pause timers when there is a bonus
     - bullets destroyed by player bullet
+    - png for second player shield
+    - return to menu button
 
 ## GAME CONTROLS
     - start menu: '1' to start with bonuses

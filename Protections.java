@@ -60,7 +60,7 @@ public class Protections
         if (timer.time == 0)
         {
             state = (state + 1) % 2;
-            timer = new IngameTimer(50);
+            timer.resetTimer();
         }
     }
 

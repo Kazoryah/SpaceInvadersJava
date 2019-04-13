@@ -25,7 +25,7 @@ public class AlienBullet
     //move alienbullet
     public void move()
     {
-        y -= 40; //chosen speed
+        y -= 15; //chosen speed
     }
 
     //check if the bullet touched the player
@@ -37,12 +37,15 @@ public class AlienBullet
         if ((x - pX) * (x - pX) + (y - pY) * (y - pY) <= 2704) //52x52
         {                                          //chose 52 because it is
                                                    //the player size on screen
-            if (Wrapper.is_bonus != 4
+            if ((Wrapper.is_bonus != 4
                 || Wrapper.bonus_shield.stillActive() != 1)
+                && player.isShielded() < 10)
             {
-                //player.die();
+                player.die();
                 StdAudio.play("audio/died.wav"); //play a sound if player dies
             }
+            else
+                player.zeroKill();
             return 1; //return 1 if it touched the player
         }
 

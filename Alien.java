@@ -40,7 +40,6 @@ public class Alien
             StdDraw.picture(x, y, purple);
         else
             StdDraw.picture(x, y, png);
-        StdDraw.text(x,y, Integer.toString(lives));
     }
 
     //setter to make the alien a shooter one
@@ -52,7 +51,7 @@ public class Alien
     //move the alien
     public void move(double alien_speed)
     {
-        if (timer.time == 0)
+//        if (timer.time == 0)
         {
             if (Wrapper.moving_right == 1) //if moving right
                 x += alien_speed;

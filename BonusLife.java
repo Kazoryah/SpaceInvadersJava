@@ -75,4 +75,26 @@ public class BonusLife
         }
         return -1;
     }
+
+    public void pause()
+    {
+        if (draw == 1)
+            still_drawn.pause();
+        else
+            still_active.pause();
+    }
+
+    public void resume()
+    {
+        if (draw == 1)
+            still_drawn.resume();
+        else
+            still_active.resume();
+    }
+
+    public void drawRectangle()
+    {
+        double n = 0.05 * (2000 - still_active.getN());
+        StdDraw.filledRectangle(1890, 50 + n, 10, n);
+    }
 }

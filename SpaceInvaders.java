@@ -7,7 +7,7 @@ public class SpaceInvaders
     Player player;
     Player player2;
     Bullet[] bullets; //all the bullets of the player
-    Protections[] protections;
+    Protections[] protections; //protections are stored in this array
 //====
     Alien[][] aliens; //all the aliens
     AlienBullet[] alien_bullets; //all the aliens' bullets
@@ -45,7 +45,7 @@ public class SpaceInvaders
         aliens_killed = 0;
         aliens_left = 36;
         aliens_won = 0;
-        difficulty = 0.03; //chosen rate of fire of the aliens
+        difficulty = 0.01; //chosen rate of fire of the aliens
         aliens_steps = 0;
         initializeProtections();
         alien_bonus = new AlienBonus();
@@ -80,16 +80,27 @@ public class SpaceInvaders
                 alien_bullets[i].draw();
         }
 
-        if (player.isAlive() == 0 && level == 3) //to fix drawinf when player2
-            player2.draw();                     //pass on player1 position
+        if (player.isAlive() == 0 && level == 3) //to fix drawing when player2
+        {                                        //pass on player1 position
+            if (player.isShielded() > 9)
+                player2.drawShield();
+            else
+                player2.draw();
+        }
         //draw player
-        if (Wrapper.is_bonus == 4 && Wrapper.bonus_shield.stillActive() == 1)
+        if ((Wrapper.is_bonus == 4 && Wrapper.bonus_shield.stillActive() == 1)
+            || player.isShielded() > 9)
             player.drawShield();
         else
             player.draw();
 
         if (level == 3 && player.isAlive() == 1)
-            player2.draw();
+        {
+            if (player2.isShielded() > 9)
+                player2.drawShield();
+            else
+                player2.draw();
+        }
 
         //draw aliens
         for (int i = 0; i < 4; i++)
@@ -102,14 +113,33 @@ public class SpaceInvaders
         }
 
         //draw bonuses
-        if (Wrapper.is_bonus == 1 && Wrapper.bonus_fire_rate.draw == 1)
-            Wrapper.bonus_fire_rate.draw();
-        if (Wrapper.is_bonus == 2 && Wrapper.bonus_life.draw == 1)
-            Wrapper.bonus_life.draw();
-        if (Wrapper.is_bonus == 3 && Wrapper.bonus_speed.draw == 1)
-            Wrapper.bonus_speed.draw();
-        if (Wrapper.is_bonus == 4 && Wrapper.bonus_shield.draw == 1)
-            Wrapper.bonus_shield.draw();
+        StdDraw.setPenColor(StdDraw.RED);
+        if (Wrapper.is_bonus == 1)
+        {
+            if (Wrapper.bonus_fire_rate.draw == 1)
+                Wrapper.bonus_fire_rate.draw();
+            else
+                Wrapper.bonus_fire_rate.drawRectangle();
+        }
+        if (Wrapper.is_bonus == 2)
+        {
+            if (Wrapper.bonus_life.draw == 1)
+                Wrapper.bonus_life.draw();
+        }
+        if (Wrapper.is_bonus == 3)
+        {
+            if (Wrapper.bonus_speed.draw == 1)
+                Wrapper.bonus_speed.draw();
+            else
+                Wrapper.bonus_speed.drawRectangle();
+        }
+        if (Wrapper.is_bonus == 4)
+        {
+            if (Wrapper.bonus_shield.draw == 1)
+                Wrapper.bonus_shield.draw();
+            else
+                Wrapper.bonus_shield.drawRectangle();
+        }
 
         //draw protections
         if (level != 2)
@@ -307,21 +337,16 @@ public class SpaceInvaders
                         row = shooter_row[j];
                         if (row < 4)
                         {
-                            int k = bullets[i].checkKill(aliens[row][j]);
-                            if (k == 1)
+                            int k = bullets[i].checkKill(aliens, row, j,
+                                                shooter_row, player, player2);
+                            if (k > 0)
                             {
-                                StdAudio.play("audio/alien_die.wav");
-                                aliens[row][j] = null;
-                                aliens_killed++;
-                                aliens_left--;
-                                shooter_row[j]++;
-                                bullets[i].increasePoints(row + 1);
-                                if (row + 1 < 4)
-                                    aliens[row + 1][j].shooter();
+                                aliens_killed += k;
+                                aliens_left -= k;
                                 bullets[i] = null;
                             }
-                            else if (k == 2) //if nullet touched a multiple
-                                bullets[i] = null;             //lives alien
+                            else if (k == 0)
+                                bullets[i] = null;
                             else
                             {
                                 //if bullet touched a shielded alien, it
@@ -329,7 +354,8 @@ public class SpaceInvaders
                                 int l = row + 1;
                                 while (l < 4 && bullets[i] != null)
                                 {
-                                    if (bullets[i].checkKill(aliens[l][j]) == -1)
+                                    if (bullets[i].checkKill(aliens, l, j,
+                                            shooter_row, player, player2) == 0)
                                         bullets[i] = null;
 
                                     l++;
@@ -341,7 +367,7 @@ public class SpaceInvaders
                 }
             }
 
-            //see if player touched the bonus
+            //see if player touched the bonus alien
             if (alien_bonus.manageBonusAlien(bullets[i]) == 1)
                 bullets[i] = null;
 
@@ -360,8 +386,9 @@ public class SpaceInvaders
                 alien_bullets[i].move();
                 int d = alien_bullets[i].checkKill(player);
                 if (d == 1)
-                    alien_bullets[i] = null; //destroy bullet if it killed
-                else if (level == 3)         //the player or touched the shield
+                //destroy bullet if it killed the player or touched the shield
+                    alien_bullets[i] = null;
+                else if (level == 3)
                 {
                     d = alien_bullets[i].checkKill(player2);
                     if (d == 1)
@@ -450,5 +477,39 @@ public class SpaceInvaders
     public int aliensWon()
     {
         return aliens_won;
+    }
+
+    public void pause()
+    {
+        player.pause();
+        player2.pause();
+
+        if (Wrapper.is_bonus == 1)
+            Wrapper.bonus_fire_rate.pause();
+        else if (Wrapper.is_bonus == 2)
+            Wrapper.bonus_life.pause();
+        else if (Wrapper.is_bonus == 3)
+            Wrapper.bonus_speed.pause();
+        else if (Wrapper.is_bonus == 4)
+            Wrapper.bonus_shield.pause();
+
+        alien_bonus.pause();
+    }
+
+    public void resume()
+    {
+        player.resume();
+        player2.resume();
+
+        if (Wrapper.is_bonus == 1)
+            Wrapper.bonus_fire_rate.resume();
+        else if (Wrapper.is_bonus == 2)
+            Wrapper.bonus_life.resume();
+        else if (Wrapper.is_bonus == 3)
+            Wrapper.bonus_speed.resume();
+        else if (Wrapper.is_bonus == 4)
+            Wrapper.bonus_shield.resume();
+
+        alien_bonus.resume();
     }
 }

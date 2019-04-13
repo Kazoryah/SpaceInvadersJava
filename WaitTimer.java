@@ -1,9 +1,9 @@
 import java.util.TimerTask;
 import java.util.Timer;
 
-public class EndTimer
+public class WaitTimer
 {
-    public EndTimer(long how_long) throws Exception
+    public WaitTimer(long how_long) throws Exception
     {
         Timer timer = new Timer();
         TimerTask task = new TimerTask()

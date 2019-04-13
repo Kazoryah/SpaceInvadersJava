@@ -1,4 +1,5 @@
 AlienBonus.java
+AlienBonusTimer.java
 AlienBullet.java
 Alien.java
 BonusFireRate.java
@@ -8,7 +9,6 @@ BonusShield.java
 BonusSpeed.java
 Bullet.java
 DrawAll.java
-EndTimer.java
 Game.java
 IngameTimer.java
 Player.java
@@ -18,4 +18,5 @@ Scoreboard.java
 SpaceInvaders.java
 StdAudio.java
 StdDraw.java
+WaitTimer.java
 Wrapper.java

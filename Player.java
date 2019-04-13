@@ -13,6 +13,8 @@ public class Player
     double speed; //speed of the player
     int blocked; //used for the bounce, to know if the player reached the border
     Bullet last_bullet; //to know if the player can shoot (rate)
+    IngameTimer has_waited_enough;
+    int is_shielded;
 
     //constructor
     public Player(double x, double y, int player)
@@ -32,6 +34,8 @@ public class Player
         speed = 0;
         blocked = 0;
         last_bullet = new Bullet(0,0,0, player); //to avoid null exception
+        has_waited_enough = new IngameTimer(5000);
+        is_shielded = 0;
     }
 
     //draw the vessel
@@ -253,7 +257,10 @@ public class Player
             if  (i < 50) //it is never going to go over that number so it does
             {            //not affect the game
                 bullets[i] = new Bullet(x, y, rotation, player);//create bullet
+                if (has_waited_enough.getTime() == 0)
+                    bullets[i].superBullet();
                 last_bullet = bullets[i];
+                has_waited_enough = new IngameTimer(5000);
                 StdAudio.play("audio/fire.wav"); //play the sound
             }
         }
@@ -270,7 +277,10 @@ public class Player
             if  (i < 50)
             {
                 bullets[i] = new Bullet(x, y, rotation, player);
+                if (has_waited_enough.getTime() == 0)
+                    bullets[i].superBullet();
                 last_bullet = bullets[i];
+                has_waited_enough = new IngameTimer(5000);
                 StdAudio.play("audio/fire.wav");
             }
         }
@@ -301,5 +311,32 @@ public class Player
         speed = 0;
         blocked = 0;
         x = start_x;
+        has_waited_enough = new IngameTimer(5000);
+        is_shielded = 0;
+    }
+
+    public int isShielded()
+    {
+        return is_shielded;
+    }
+
+    public void increaseKills()
+    {
+        is_shielded++;
+    }
+
+    public void zeroKill()
+    {
+        is_shielded = 0;
+    }
+
+    public void pause()
+    {
+        has_waited_enough.pause();
+    }
+
+    public void resume()
+    {
+        has_waited_enough.resume();
     }
 }

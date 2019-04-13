@@ -11,6 +11,7 @@ public class Bullet
     IngameTimer timer;//to know if the player can shoot again
     int launched_by_player; //to know the color of the bullet and at who to give
                             //points if it killed an alien
+    int super_bullet;
 
     //constructor
     public Bullet(double x, double y, int degree, int by_player)
@@ -44,6 +45,8 @@ public class Bullet
 
         //the timer here is to control the fire rate
         timer = new IngameTimer(Wrapper.rate);
+
+        super_bullet = 0;
     }
 
     //draw bullet
@@ -70,22 +73,61 @@ public class Bullet
     }
 
     //check if the bullet killed an alien
-    public int checkKill(Alien alien)
+    public int checkKill(Alien[][] aliens, int i, int j, int[] shooter_row,
+                         Player player1, Player player2)
     {
+        Alien alien = aliens[i][j];
         double aX = alien.getX();
         double aY = alien.getY();
 
         if ((x - aX) * (x - aX) + (y - aY) * (y - aY) <= 1849) //43x43
         {                                       //I chose 43 because it is the
-            int i = alien.lessenLives();        //alien size on the screen
-            if (i == 0)
-                return 1;
-            else if (i == -1)
-                return -1; //if the alien wasnt a shooter
+            int n = 0;                          //alien size on the screen
+            if (super_bullet == 1)
+            {
+                if (j - 1 > -1)
+                {
+                    if (aliens[i][j - 1] != null &&
+                        aliens[i][j - 1].lessenLives() == 0)
+                    {
+                        killAlien(aliens, i, j - 1, shooter_row, player1,
+                                  player2);
+                        n++;
+                    }
+                }
+                if (j + 1 < 9)
+                {
+                    if (aliens[i][j + 1] != null &&
+                        aliens[i][j + 1].lessenLives() == 0)
+                    {
+                        killAlien(aliens, i, j + 1, shooter_row, player1,
+                                  player2);
+                        n++;
+                    }
+                }
+            }
+
+            if (alien.lessenLives() == 0)
+            {
+                killAlien(aliens, i, j, shooter_row, player1, player2);
+                StdAudio.play("audio/alien_die.wav");
+                return ++n;
+            }
             else
-                return 2; //if the alien was a shooter but had multiple lives
+                return 0; //if the alien wasnt a shooter
+                          //if the alien was a shooter but had multiple lives
         }
-        return 0;
+        return -1;
+    }
+
+    public void killAlien(Alien[][] aliens, int i, int j, int[] shooter_row,
+                          Player player1, Player player2)
+    {
+        aliens[i][j] = null;
+        if (i + 1 < 4)
+            aliens[i + 1][j].shooter();
+        increasePoints(i + 1, player1, player2);
+        shooter_row[j]++;
     }
 
     //check is the bullet is out of screen and needs to be destroyed
@@ -97,12 +139,18 @@ public class Bullet
     }
 
     //function to increase players' points
-    public void increasePoints(int row)
+    public void increasePoints(int row, Player player1, Player player2)
     {
         if (launched_by_player == 1)
+        {
             Wrapper.first_player_points += 10 * row; //points given were chosen
+            player1.increaseKills();
+        }
         else
+        {
             Wrapper.second_player_points += 10 * row;
+            player2.increaseKills();
+        }
     }
 
     //getter for x
@@ -120,5 +168,11 @@ public class Bullet
     public double getPlayer()
     {
         return launched_by_player;
+    }
+
+    public void superBullet()
+    {
+        png = "png/laser_super.png";
+        super_bullet = 1;
     }
 }
