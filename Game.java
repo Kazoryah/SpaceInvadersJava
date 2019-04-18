@@ -15,7 +15,8 @@ public class Game
         RefreshTimer refresh_timer; //needed to get the same refresh rate
                                     //between every computer
 
-        StdAudio.loop("audio/background_low.wav");
+//        StdAudio.loop("audio/background_low.wav");
+        //this music had to be remove for the zip to be less than 20MB...
 
         while (true) //the whole ame loop
         {
@@ -73,9 +74,9 @@ public class Game
         //THE PLAYING PART
             while (SI.aliensWon() == 0)
             {
-                //if (refresh_timer.getTime() == 0)
+                if (refresh_timer.getTime() == 0)
                 {
-                    //refresh_timer = new RefreshTimer(20);
+                    refresh_timer = new RefreshTimer(20);
 
                 //restart if no aliens left
                     if (SI.aliensLeft() == 0)

@@ -15,6 +15,7 @@ public class RefreshTimer
             public void run()
             {
                 time = 0;
+                timer.cancel();
             }
         };
         timer.schedule(task, rate, rate);

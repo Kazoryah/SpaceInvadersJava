@@ -9,7 +9,7 @@ public class IngameTimer
     int pause;
     long rate;
 
-        public IngameTimer(long rate)
+    public IngameTimer(long rate)
     {
         time = 1;
         n = 0;
@@ -20,8 +20,9 @@ public class IngameTimer
             public void run()
             {
                 n += 50;
-                if (n == rate)
+                if (n >= rate)
                     time = 0;
+
             }
         };
 
@@ -55,11 +56,14 @@ public class IngameTimer
             public void run()
             {
                 n += 50;
-                if (n == rate)
+                if (n >= rate)
                     time = 0;
             }
         };
-        timer.schedule(task, rate - pause, rate);
+        if (pause >= rate)
+            timer.schedule(task, rate, rate);
+        else
+            timer.schedule(task, rate - pause, rate);
     }
 
     public int getN()
